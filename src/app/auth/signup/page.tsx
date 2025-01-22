@@ -6,14 +6,20 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Icon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import Assets from '../../../../public/assets/assets'
 import { useRouter } from 'next/navigation'
-import Assets from '../../public/assets/assets'
 
 
 const Page: React.FC = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [telegram, setTelegram] = useState('')
+
     const router = useRouter();
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value);
+    };
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
     };
@@ -21,11 +27,9 @@ const Page: React.FC = () => {
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
-
-    const handleLogin = () => {
-        document.cookie = "auth-token=mock-token; path=/";
-        router.push("/dashboard");
-      };
+    const handleTelegramChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTelegram(e.target.value);
+    };
     return (
         <div className='flex items-center justify-between mx-auto w-full max-w-[1440px] p-4 '>
             <div className='justify-center w-[50%]  mx-auto items-center'>
@@ -35,12 +39,27 @@ const Page: React.FC = () => {
                 />
                 <div className='w-[424px] justify-center mx-auto mt-3'>
                     <TextInput
+                        label="Name"
+                        type="text"
+                        placeholder="Enter your email"
+                        value={name}
+                        onChange={handleNameChange}
+                    />
+                    <TextInput
                         label="Email"
                         type="email"
                         placeholder="Enter your email"
                         value={email}
                         onChange={handleEmailChange}
                     />
+                    <TextInput
+                        label="Telegram"
+                        type="text"
+                        placeholder="Enter your email"
+                        value={telegram}
+                        onChange={handleTelegramChange}
+                    />
+
                     <TextInput
                         label="Password"
                         type="password"
@@ -51,24 +70,21 @@ const Page: React.FC = () => {
                     />
 
                 </div>
-                <div className='flex items-center justify-between mx-auto w-[424px]'>
-                    <div className="flex items-center space-x-2">
+                <div className='flex  justify-between mx-auto w-[424px]'>
+                    <div className="flex items-start space-x-2">
                         <Checkbox className='border border-zinc-500' id="Remember" />
                         <label
                             htmlFor="Remember"
-                            className="text-sm text-zinc-500 Inter  font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-xs  text-zinc-500 Inter  font-normal peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
-                            Remember me
+                            I consent to receive informational emails from Jumper Media, with the option to withdraw my consent at any time in the future.
                         </label>
-                    </div>
-                    <div>
-                        <p className='text-zinc-300 text-sm Inter font-medium cursor-pointer'>Forgot Password?</p>
                     </div>
 
                 </div>
                 <div className='w-[424px] flex flex-col gap-5 justify-center mx-auto mt-5'>
-                    <Button onClick={handleLogin} variant={'secondary'} className='bg-blue-700 w-[424px] py-6 hover:bg-zinc-400 hover:text-zinc-900 text-zinc-200 Inter' >
-                        Sign In
+                    <Button onClick={() => router.push('/dashboard')} variant={'secondary'} className='bg-blue-700 w-[424px] py-6 hover:bg-zinc-400 hover:text-zinc-900 text-zinc-200 Inter' >
+                        Create Account
                     </Button>
                     <p className='text-zinc-500 Inter font-normal text-center'>Or</p>
 
@@ -78,8 +94,8 @@ const Page: React.FC = () => {
                         />   Sign up with Google
                     </Button>
                 </div>
-                <div onClick={() => router.push('/auth/signup')}>
-                    <p className='text-center text-zinc-400 text-sm Inter mt-8'>Don’t have account? <span className='text-zinc-200 text-sm Inter font-medium cursor-pointer'>Sign Up</span></p>
+                <div onClick={() => router.push('/auth/login')}>
+                    <p className='text-center text-zinc-400 text-sm Inter mt-8'>Already have account?<span className='text-zinc-200 text-sm Inter font-medium cursor-pointer'> Sign In</span></p>
                 </div>
 
 

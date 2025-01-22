@@ -6,8 +6,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Icon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import Assets from '../../../../public/assets/assets'
 import { useRouter } from 'next/navigation'
-import Assets from '../../public/assets/assets'
 
 
 const Page: React.FC = () => {
@@ -21,11 +21,6 @@ const Page: React.FC = () => {
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
-
-    const handleLogin = () => {
-        document.cookie = "auth-token=mock-token; path=/";
-        router.push("/dashboard");
-      };
     return (
         <div className='flex items-center justify-between mx-auto w-full max-w-[1440px] p-4 '>
             <div className='justify-center w-[50%]  mx-auto items-center'>
@@ -67,7 +62,7 @@ const Page: React.FC = () => {
 
                 </div>
                 <div className='w-[424px] flex flex-col gap-5 justify-center mx-auto mt-5'>
-                    <Button onClick={handleLogin} variant={'secondary'} className='bg-blue-700 w-[424px] py-6 hover:bg-zinc-400 hover:text-zinc-900 text-zinc-200 Inter' >
+                    <Button onClick={() => router.push('/dashboard')} variant={'secondary'} className='bg-blue-700 w-[424px] py-6 hover:bg-zinc-400 hover:text-zinc-900 text-zinc-200 Inter' >
                         Sign In
                     </Button>
                     <p className='text-zinc-500 Inter font-normal text-center'>Or</p>
