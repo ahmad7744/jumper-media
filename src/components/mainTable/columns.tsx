@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ColumnDef } from "@tanstack/react-table"
 import { RefreshCw, Settings } from "lucide-react"
+import Assets from "../../../public/assets/assets"
 
 
 // This type is used to define the shape of our data.
@@ -15,6 +16,7 @@ export type Payment = {
     name: string
     IPAddress: string
     LastActivity: string
+    locations: string[];
 }
 
 export const columns: ColumnDef<Payment>[] = [
@@ -71,6 +73,11 @@ export const columns: ColumnDef<Payment>[] = [
         header: "CURRENT IP ADDRESS",
     },
     {
+        accessorKey: "locations",
+        header: "LOCATIONS",
+        cell: ({ row }) => row.original.locations.join(", "),
+    },
+    {
         accessorKey: "LastActivity",
         header: "LAST ACTIVITY",
     },
@@ -80,8 +87,11 @@ export const columns: ColumnDef<Payment>[] = [
         header: "ACTIONS",
         cell: ({ }) => (
             <div className="flex gap-2 items-center">
-                <Button variant="outline" size="sm" className="bg-zinc-900 border border-zinc-800">
-                    <RefreshCw /> Rotate IP
+                <Button variant="outline" size="sm" className="bg-zinc-900 border text-xs border-zinc-800 hover:text-zinc-900">
+                    <div
+                        
+                        dangerouslySetInnerHTML={{ __html: Assets.BulkRotate }}
+                    /> Rotate IP
                 </Button>
                 <Button variant="outline" size="sm" className="bg-zinc-900 border border-zinc-800">
                     <Settings />

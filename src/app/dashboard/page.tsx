@@ -13,6 +13,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["San Diego, CA"],
     },
     {
       id: "2",
@@ -21,6 +22,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["Angola"],
 
 
     },
@@ -31,6 +33,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["San Diego, CA"]
 
 
     },
@@ -41,6 +44,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["Angola"],
 
 
     },
@@ -51,6 +55,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["Angola"],
 
 
 
@@ -62,6 +67,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["San Diego, CA"]
 
 
     },
@@ -72,6 +78,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["St. Louis, MO"]
 
 
 
@@ -83,6 +90,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["Chicago, IL"]
 
     },
     {
@@ -92,6 +100,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["New York, NY"]
 
 
 
@@ -103,6 +112,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
+      locations: ["San Diego, CA"]
 
 
 
@@ -114,8 +124,7 @@ const Page = () => {
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
-
-
+      locations: ["San Diego, CA"]
 
     },
   ];

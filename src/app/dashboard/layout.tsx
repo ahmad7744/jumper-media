@@ -8,8 +8,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const sidebarItems = [
     { label: "DashBoard", icon: Assets.Dashboard },
+    { label: "Groups", icon: Assets.Groups },
     { label: "Settings", icon: Assets.Setting },
-    { label: "Download App", icon: Assets.Download },
+   
   ];
 
   const handleItemClick = (label: string) => {

@@ -28,9 +28,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import React from "react"
-import { ChevronDown, ChevronLeft, ChevronRight, RefreshCw, RotateCcw } from 'lucide-react';
+import { Check, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, RotateCcw } from 'lucide-react';
 import CustomRadioButton from "./cutomRadioButton";
 import Assets from "../../../public/assets/assets"
+import { Checkbox, CheckboxIndicator } from "@radix-ui/react-checkbox"
 
 
 interface DataTableProps<TData, TValue> {
@@ -38,7 +39,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
 }
 
-export function DataTable<TData extends { status: string }, TValue>({
+export function DataTable<TData extends { status: string, locations: string[] }, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
@@ -49,11 +50,45 @@ export function DataTable<TData extends { status: string }, TValue>({
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
     const [filterStatus, setFilterStatus] = React.useState<'All' | 'Online' | 'Offline'>('All')
+    const [selectedLocations, setSelectedLocations] = React.useState<string[]>([]);
 
+    // const filteredData = React.useMemo(() => {
+    //     if (filterStatus === 'All') return data
+    //     return data.filter((item) => item.status === filterStatus)
+    // }, [filterStatus, data])
+
+
+    const allLocations = React.useMemo(() => {
+        const locations = data.flatMap((item) => item.locations);
+        return ["All", ...Array.from(new Set(locations))];
+    }, [data]);
+
+    // Filter data by status and locations
     const filteredData = React.useMemo(() => {
-        if (filterStatus === 'All') return data
-        return data.filter((item) => item.status === filterStatus)
-    }, [filterStatus, data])
+        let filtered = data;
+
+        if (filterStatus !== "All") {
+            filtered = filtered.filter((item) => item.status === filterStatus);
+        }
+
+        if (selectedLocations.length > 0 && !selectedLocations.includes("All")) {
+            filtered = filtered.filter((item) => {
+                const locations = item.locations;
+                return locations.some((loc) => selectedLocations.includes(loc));
+            });
+        }
+
+        return filtered;
+    }, [filterStatus, selectedLocations, data]);
+
+
+
+    const handleLocationToggle = (location: string) => {
+        setSelectedLocations((prev) =>
+            prev.includes(location) ? prev.filter((loc) => loc !== location) : [...prev, location]
+        );
+    };
+
 
     const table = useReactTable({
         data: filteredData,
@@ -89,10 +124,68 @@ export function DataTable<TData extends { status: string }, TValue>({
                     onChange={(event) =>
                         table.getColumn("phoneID")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm border-neutral-800 text-neutral-400"
+                    className="max-w-[260px] bg-zinc-900 border-neutral-800 text-neutral-400"
 
                 />
                 <div className="gap-3 flex">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="outline"
+                                className="ml-auto bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
+                                size="sm"
+                            >
+                                Locations:{" "}
+                                {selectedLocations.length === 0
+                                    ? "All"
+                                    : selectedLocations.length === 1
+                                        ? selectedLocations[0]
+                                        : `${selectedLocations[0]}, ...`}{" "}
+                                <ChevronDown />
+                            </Button>
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent
+                            className="bg-[#0A0A0A] border border-neutral-800 mt-3 rounded-md shadow-lg w-[198px] p-1 absolute z-50"
+                            align="start"
+                        >
+                            {allLocations.map((location) => {
+                                const isSelected = selectedLocations.includes(location);
+                                return (
+                                    <div
+                                        key={location}
+                                        className={`flex items-center space-x-2 p-2 ${isSelected ? 'bg-zinc-800 rounded-[2px]' : ''}`}
+                                    >
+                                        <Checkbox
+                                            checked={isSelected}
+                                            onCheckedChange={(checked) => {
+                                                if (checked) {
+                                                    setSelectedLocations((prev) => [...prev, location]);
+                                                } else {
+                                                    setSelectedLocations((prev) => prev.filter((loc) => loc !== location));
+                                                }
+                                            }}
+                                            id={location}
+                                            className="border border-zinc-500 w-4 h-4 rounded-sm data-[state=checked]:bg-zinc-300 data-[state=checked]:border-zinc-300"
+                                        >
+                                            <CheckboxIndicator className="text-zinc-950">
+                                                <Check className="w-4 h-4" />
+                                            </CheckboxIndicator>
+                                        </Checkbox>
+
+                                        <label
+                                            htmlFor={location}
+                                            className="text-sm text-zinc-200 Inter font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ml-2"
+                                        >
+                                            {location}
+                                        </label>
+                                    </div>
+                                );
+                            })}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto bg-transparent border Inter font-medium border-neutral-800 text-neutral-50" size={"sm"}>
@@ -118,9 +211,9 @@ export function DataTable<TData extends { status: string }, TValue>({
                     <Button
                         variant="outline"
                         className={`border border-none ${Object.keys(rowSelection).length > 0
-                                ? "bg-[#3F621280] text-lime-400 Inter font-medium"
-                                : "bg-blue-700 border border-neutral-800 text-zinc-300 Inter font-medium"
-                            } hover:text-zinc-900 hover:bg-white`} 
+                            ? "bg-[#3F621280] text-lime-400 Inter font-medium"
+                            : "bg-blue-700 border border-neutral-800 text-zinc-300 Inter font-medium"
+                            } hover:text-zinc-900 hover:bg-white`}
                         size="sm"
                     >
                         <div
@@ -139,7 +232,7 @@ export function DataTable<TData extends { status: string }, TValue>({
                             <TableRow className="border-neutral-800 border" key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead className="text-neutral-400 Inter font-medium" key={header.id}>
+                                        <TableHead className="text-neutral-400 text-[10px] Inter font-medium" key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -164,7 +257,7 @@ export function DataTable<TData extends { status: string }, TValue>({
 
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell className="text-neutral-50 Inter font-medium text-sm" key={cell.id}>
+                                        <TableCell className="text-neutral-50 Inter font-medium text-xs" key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
 
                                         </TableCell>
