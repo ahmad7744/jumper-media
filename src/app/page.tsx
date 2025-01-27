@@ -3,8 +3,6 @@ import Header from '@/components/header/header'
 import TextInput from '@/components/textInput/TextInput'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from "@/components/ui/checkbox"
-import { Icon } from 'lucide-react'
-import Image from 'next/image'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Assets from '../../public/assets/assets'

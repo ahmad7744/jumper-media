@@ -1,7 +1,7 @@
 // components/TextInput.tsx
 import React, { useState } from 'react';
 import { Input } from '../ui/input';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Search } from 'lucide-react';
 
 interface TextInputProps {
     label: string;
@@ -10,6 +10,7 @@ interface TextInputProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value: string;
     isPasswordField?: boolean;
+    isSearchField?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -19,6 +20,8 @@ const TextInput: React.FC<TextInputProps> = ({
     onChange,
     value,
     isPasswordField = false,
+    isSearchField = false,
+
 }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -44,8 +47,18 @@ const TextInput: React.FC<TextInputProps> = ({
                     {isPasswordVisible ? (
                         <Eye className=' text-zinc-300' />
                     ) : (
-                        <EyeOff className=' text-zinc-300'  />
+                        <EyeOff className=' text-zinc-300' />
                     )}
+                </div>
+            )}
+            {isSearchField && (
+                <div
+                   
+                    className="absolute left-4-4 top-10  cursor-pointer"
+                >
+
+                    <Search className=' text-zinc-300' />
+
                 </div>
             )}
         </div>

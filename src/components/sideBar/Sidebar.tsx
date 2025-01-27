@@ -1,46 +1,47 @@
 import React from "react";
+import Link from "next/link"; 
 import Assets from "../../../public/assets/assets";
-import { Button } from "../ui/button";
 
 const Sidebar = ({
   items,
   onItemClick,
   selectedItem,
 }: {
-  items: { label: string; icon: string }[];
+  items: { label: string; icon: string; path: string }[]; 
   onItemClick: (label: string) => void;
   selectedItem: string;
 }) => {
   return (
-    <div className="w-[268px] bg-neutral-950 py-6 px-5 text-zinc-200 flex flex-col mx-auto">
+    <div className="w-[268px] bg-neutral-950 py-6 px-5 text-zinc-200 flex flex-col">
       <div dangerouslySetInnerHTML={{ __html: Assets.MainLogo }} />
       <div className="flex-1 mt-10">
         <ul className="space-y-2">
           {items.map((item, index) => (
             <li key={index}>
-              <button
-                className={`w-full flex items-center space-x-4 rounded-[8px] px-4 py-2 transition ${selectedItem === item.label
-                  ? "bg-zinc-800 text-zinc-200"
-                  : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-200"
-                  }`}
-                onClick={() => onItemClick(item.label)}
-              >
-                <div dangerouslySetInnerHTML={{ __html: item.icon }} />
-                <span>{item.label}</span>
-              </button>
+              <Link href={item.path}> 
+                <button
+                  className={`w-full flex items-center space-x-4 rounded-[8px] px-4 py-2 transition ${selectedItem === item.label
+                    ? "bg-zinc-800 text-zinc-200"
+                    : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-200"
+                    }`}
+                  onClick={() => onItemClick(item.label)}
+                >
+                  <div dangerouslySetInnerHTML={{ __html: item.icon }} />
+                  <span>{item.label}</span>
+                </button>
+              </Link>
             </li>
           ))}
         </ul>
       </div>
-      <div>
+      <div className="absolute bottom-6">
         <div className="bg-zinc-800 p-3 rounded-xl flex items-center">
           <div className="flex items-center gap-2">
-            <div className="downloadGradient p-2  rounded-lg">
+            <div className="downloadGradient p-2 rounded-lg">
               <div
                 className="text-zinc-200 w-6 h-6 text-center"
                 dangerouslySetInnerHTML={{ __html: Assets.Download }}
               />
-
             </div>
             <div>
               <p className="Inter text-zinc-200 font-bold text-base">Get Jumper App</p>
@@ -51,7 +52,6 @@ const Sidebar = ({
               </div>
             </div>
           </div>
-
         </div>
         <div className="flex items-center gap-4 mt-6">
           <p className="text-center bg-blue-700 w-[48px] py-[11px] px-[10px] rounded-[12px] items-center">
@@ -66,7 +66,6 @@ const Sidebar = ({
             </p>
           </div>
         </div>
-
       </div>
     </div>
   );

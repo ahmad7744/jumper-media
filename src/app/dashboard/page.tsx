@@ -155,6 +155,7 @@ const Page = () => {
             icon={Assets.OfflineIcon}
             className="border border-gray-700"
           />
+          {/* <LocationsGrid /> */}
         </div>
         <p className="text-zinc-200 mt-10 Inter text-xl">All Phones</p>
         <DataTable columns={columns} data={data} />
