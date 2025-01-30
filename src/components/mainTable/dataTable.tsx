@@ -13,7 +13,6 @@ import {
     VisibilityState,
 } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
     Table,
     TableBody,
@@ -32,6 +31,7 @@ import { Check, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, RotateCcw } f
 import CustomRadioButton from "./cutomRadioButton";
 import Assets from "../../../public/assets/assets"
 import { Checkbox, CheckboxIndicator } from "@radix-ui/react-checkbox"
+import InputField from "../inputField/inputField"
 
 
 interface DataTableProps<TData, TValue> {
@@ -43,7 +43,7 @@ export function DataTable<TData extends { status: string, locations: string[] },
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
-    // Move useState hooks inside the function component
+ 
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -52,18 +52,13 @@ export function DataTable<TData extends { status: string, locations: string[] },
     const [filterStatus, setFilterStatus] = React.useState<'All' | 'Online' | 'Offline'>('All')
     const [selectedLocations, setSelectedLocations] = React.useState<string[]>([]);
 
-    // const filteredData = React.useMemo(() => {
-    //     if (filterStatus === 'All') return data
-    //     return data.filter((item) => item.status === filterStatus)
-    // }, [filterStatus, data])
-
 
     const allLocations = React.useMemo(() => {
         const locations = data.flatMap((item) => item.locations);
         return ["All", ...Array.from(new Set(locations))];
     }, [data]);
 
-    // Filter data by status and locations
+
     const filteredData = React.useMemo(() => {
         let filtered = data;
 
@@ -80,14 +75,6 @@ export function DataTable<TData extends { status: string, locations: string[] },
 
         return filtered;
     }, [filterStatus, selectedLocations, data]);
-
-
-
-    const handleLocationToggle = (location: string) => {
-        setSelectedLocations((prev) =>
-            prev.includes(location) ? prev.filter((loc) => loc !== location) : [...prev, location]
-        );
-    };
 
 
     const table = useReactTable({
@@ -118,13 +105,16 @@ export function DataTable<TData extends { status: string, locations: string[] },
     return (
         <div>
             <div className="flex items-center py-5 justify-between max-w-[1360px]">
-                <Input
+            
+                <InputField
+                    id="search"
                     placeholder="Search Phones"
+                    icon={true}
+                    size="small"
                     value={(table.getColumn("phoneID")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn("phoneID")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-[260px] bg-zinc-900 border-neutral-800 text-neutral-400"
 
                 />
                 <div className="gap-3 flex">
@@ -175,7 +165,7 @@ export function DataTable<TData extends { status: string, locations: string[] },
 
                                         <label
                                             htmlFor={location}
-                                            className="text-sm text-zinc-200 Inter font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ml-2"
+                                            className="text-sm text-zinc-200 Inter font-normal leading-none cursor-pointer peer-disabled:opacity-70 ml-2"
                                         >
                                             {location}
                                         </label>

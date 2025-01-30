@@ -104,3 +104,33 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
 
 }
+
+.progress {
+  position: relative;
+  margin: 4px;
+  float: left;
+  text-align: center;
+  width: 254px;
+  height: 123px;
+}
+
+.barOverflow {
+  position: relative;
+  overflow: hidden;
+  width: 254px;
+  height: 127px;
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 254px;
+  height: 245px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 20px solid #27272a;
+  border-bottom-color: #54FFF5;
+  border-right-color: #54FFF5;
+  transform-origin: center;
+}

@@ -18,7 +18,7 @@ const Page = () => {
     {
       id: "2",
       status: "Online",
-      phoneID: "PHN001",
+      phoneID: "PHN002",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -29,7 +29,7 @@ const Page = () => {
     {
       id: "3",
       status: "Online",
-      phoneID: "PHN001",
+      phoneID: "PHN003",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -40,7 +40,7 @@ const Page = () => {
     {
       id: "4",
       status: "Online",
-      phoneID: "PHN001",
+      phoneID: "PHN004",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -51,7 +51,7 @@ const Page = () => {
     {
       id: "5",
       status: "Online",
-      phoneID: "PHN001",
+      phoneID: "PHN005",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -63,7 +63,7 @@ const Page = () => {
     {
       id: "4",
       status: "Online",
-      phoneID: "PHN001",
+      phoneID: "PHN006",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -74,7 +74,7 @@ const Page = () => {
     {
       id: "6",
       status: "Offline",
-      phoneID: "PHN001",
+      phoneID: "PHN007",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -86,7 +86,7 @@ const Page = () => {
     {
       id: "7",
       status: "Offline",
-      phoneID: "PHN001",
+      phoneID: "PHN008",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -96,7 +96,7 @@ const Page = () => {
     {
       id: "8",
       status: "Online",
-      phoneID: "PHN001",
+      phoneID: "PHN009",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -108,7 +108,7 @@ const Page = () => {
     {
       id: "9",
       status: "Online",
-      phoneID: "PHN001",
+      phoneID: "PHN010",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
@@ -120,7 +120,7 @@ const Page = () => {
     {
       id: "10",
       status: "Online",
-      phoneID: "PHN001",
+      phoneID: "PHN011",
       name: "Galaxy A14",
       IPAddress: "192.168.1.101",
       LastActivity: "2025-01-13 10:45:12",
