@@ -20,7 +20,7 @@ const Sidebar = ({
             <li key={index}>
               <Link href={item.path}> 
                 <button
-                  className={`w-full flex items-center space-x-4 rounded-[8px] px-4 py-2 transition ${selectedItem === item.label
+                  className={`w-full flex items-center space-x-4 rounded-[8px] px-2 py-2 transition ${selectedItem === item.label
                     ? "bg-zinc-800 text-zinc-200"
                     : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-200"
                     }`}
