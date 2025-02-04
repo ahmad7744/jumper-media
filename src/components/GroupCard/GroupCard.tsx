@@ -9,6 +9,7 @@ interface GroupCardProps {
     inactiveDevices: number;
     downloadSpeed: string;
     uploadSpeed: string;
+    onPress: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const GroupCard: React.FC<GroupCardProps> = ({
@@ -19,12 +20,14 @@ const GroupCard: React.FC<GroupCardProps> = ({
     inactiveDevices,
     downloadSpeed,
     uploadSpeed,
+    onPress
 }) => {
     const activePercentage = ((activeDevices / totalDevices) * 100).toFixed(0);
     const inactivePercentage = ((inactiveDevices / totalDevices) * 100).toFixed(0);
+    
 
     return (
-        <div className="items-center w-full max-w-[356px] Inter bg-zinc-900 border border-[#FFFFFF0F] rounded-[8px]">
+        <div onClick={onPress} className="items-center cursor-pointer w-full max-w-[356px] Inter bg-zinc-900 border border-[#FFFFFF0F] rounded-[8px]">
             <div className="p-6">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-5">
@@ -56,12 +59,12 @@ const GroupCard: React.FC<GroupCardProps> = ({
             <div className="border-t px-6 w-full border-zinc-800">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div dangerouslySetInnerHTML={{ __html: Assets.DownloadSpeed }} />
+                        <div className='text-purple-400' dangerouslySetInnerHTML={{ __html: Assets.DownloadSpeed }} />
                         <p className="text-purple-400 text-sm font-medium">{downloadSpeed} Mbps</p>
                     </div>
                     <div className="h-14 border-r border-zinc-800"></div>
                     <div className="flex items-center gap-3">
-                        <div dangerouslySetInnerHTML={{ __html: Assets.UploadSpeed }} />
+                        <div className='text-blue-400' dangerouslySetInnerHTML={{ __html: Assets.UploadSpeed }} />
                         <p className="text-blue-400 text-sm font-medium">{uploadSpeed} Mbps</p>
                     </div>
                 </div>

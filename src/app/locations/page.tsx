@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import InputField from "@/components/inputField/inputField";
 import LocationCard from "@/components/locationCard/locationCard";
 import DropdownFilter from "@/components/DropdownFilter/DropdownFilter";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [search, setSearch] = useState("");
@@ -68,7 +69,7 @@ const Page = () => {
       downloadSpeed: "11.0",
       uploadSpeed: "4.8"
     },
-   
+
   ];
 
   const statusOptions = [
@@ -109,6 +110,13 @@ const Page = () => {
     return result;
   }, [locations, search, filterStatus, selectedLocations]);
 
+  const router = useRouter();
+
+  const handleLocation = () => {
+    router.push('/locationOpened')
+  }
+
+
   return (
     <div className="w-full p-10 h-screen mx-auto">
       <div className="w-full max-w-[1160px] mx-auto">
@@ -137,7 +145,7 @@ const Page = () => {
       <div className="mx-auto w-full max-w-[1160px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 py-10">
         {filteredLocations.length > 0 ?
           filteredLocations.map((location, index) =>
-            <LocationCard key={index} {...location} />)
+            <LocationCard onPress={handleLocation} IP="Devices" key={index} {...location} />)
           :
           <p className="text-neutral-50 Inter font-medium text-xl">No data found</p>
         }

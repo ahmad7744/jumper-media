@@ -134,3 +134,9 @@ body {
   border-right-color: #54FFF5;
   transform-origin: center;
 }
+
+.bg-blur {
+  backdrop-filter: blur(80px);
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.2); 
+}

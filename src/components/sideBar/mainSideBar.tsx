@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Assets from "../../../public/assets/assets";
 import Sidebar from "./Sidebar";
@@ -9,7 +8,6 @@ export default function SidebarWithState({ children }: { children: React.ReactNo
   const pathname = usePathname();
   const [selectedItem, setSelectedItem] = useState<string>("");
 
-
   const sidebarItems = [
     { label: "Dashboard", icon: Assets.Dashboard, path: "/dashboard" },
     { label: "Locations", icon: Assets.Locations, path: "/locations" },
@@ -17,13 +15,22 @@ export default function SidebarWithState({ children }: { children: React.ReactNo
     { label: "Settings", icon: Assets.Setting, path: "/settings" },
   ];
 
-  
   useEffect(() => {
-    const currentItem = sidebarItems.find((item) => item.path === pathname);
-    if (currentItem) {
-      setSelectedItem(currentItem.label);
+  
+    if (pathname.startsWith("/groups") || pathname.startsWith("/groupOpened")) {
+      setSelectedItem("Groups");
+    }
+    else if (pathname.startsWith("/locations") || pathname.startsWith("/locationOpened")) {
+      setSelectedItem("Locations");
+    }
+     else {
+      const currentItem = sidebarItems.find((item) => pathname.startsWith(item.path));
+      setSelectedItem(currentItem?.label || "");
     }
   }, [pathname]);
+  
+  
+  
 
   if (pathname === "/auth/login" || pathname === "/" || pathname === "/auth/signup") {
     return children;
@@ -34,13 +41,22 @@ export default function SidebarWithState({ children }: { children: React.ReactNo
   };
 
   return (
-    <div className="flex">
-      <Sidebar
-        items={sidebarItems}
-        onItemClick={handleItemClick}
-        selectedItem={selectedItem}
-      />
-      <main className="flex-1 overflow-y-auto">{children}</main>
+    <div className="flex h-screen overflow-hidden"> 
+      {/* Make sidebar sticky */}
+      <div className="sticky top-0 h-screen">
+        <Sidebar
+          items={sidebarItems}
+          onItemClick={handleItemClick}
+          selectedItem={selectedItem}
+        />
+      </div>
+      
+      {/* Main content area with controlled scrolling */}
+      <main className="flex-1 overflow-y-auto relative">
+        <div className="min-h-full  mx-auto max-w-[1160px]">
+          {children}
+        </div>
+      </main>
     </div>
   );
 }

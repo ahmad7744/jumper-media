@@ -1,7 +1,6 @@
 "use client";
 import React, { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
 import LocationCard from "@/components/locationCard/locationCard";
 import InputField from "@/components/inputField/inputField";
 import DropdownFilter from "@/components/DropdownFilter/DropdownFilter";
@@ -10,11 +9,13 @@ import { CheckboxIndicator } from "@radix-ui/react-checkbox";
 import CustomRadioButton from "@/components/mainTable/cutomRadioButton";
 import GroupCard from "@/components/GroupCard/GroupCard";
 import Assets from "../../../public/assets/assets";
-
+import { useRouter } from 'next/navigation'
+import { usePathname } from "next/navigation";
 const GroupPage = () => {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+
   const Groups = [
     {
       title: "High Speed",
@@ -101,6 +102,10 @@ const GroupPage = () => {
 
     return result;
   }, [Groups, search, filterStatus, selectedGroups]);
+  const router = useRouter();
+  const handleGroupClick = () => {
+    router.push(`/groupOpened`);
+  };
 
   return (
     <div className="w-full p-10 h-screen mx-auto">
@@ -140,9 +145,9 @@ const GroupPage = () => {
                       bg-blue-700  text-zinc-300 Inter font-medium"
               size="sm"
             >
-              <div
-                dangerouslySetInnerHTML={{ __html: Assets.AddIcon }}
-              />
+
+              <div dangerouslySetInnerHTML={{ __html: Assets.AddIcon }} />
+
               New Group
             </Button>
 
@@ -152,7 +157,7 @@ const GroupPage = () => {
 
       <div className="mx-auto w-full max-w-[1160px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 py-10">
         {filteredGroups.length > 0 ? (
-          filteredGroups.map((group, index) => <GroupCard key={index} {...group} />)
+          filteredGroups.map((group, index) => <GroupCard onPress={handleGroupClick} key={index} {...group} />)
         ) : (
           <p className="text-neutral-50 Inter font-medium text-xl">No data found</p>
         )}
