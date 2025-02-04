@@ -9,8 +9,7 @@ import { DataTable } from "@/components/mainTable/dataTable";
 import { columns, Payment } from "@/components/mainTable/columns";
 import StatCard from "@/components/StatCard/StatCard";
 const page = () => {
-  const searchParams = useSearchParams();
-  const groupTitle = searchParams.get("group");
+ 
 
    const data: Payment[] = [
       {
