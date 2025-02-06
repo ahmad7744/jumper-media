@@ -140,3 +140,39 @@ body {
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.06);
   background: rgba(255, 255, 255, 0.2); 
 }
+
+
+.modal-wrapper {
+  width: 710px;
+
+}
+
+.modal {
+
+  height:100%;
+  width:100%;
+  border-radius: 8px;
+  padding: 32px;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-body {
+  padding-top: 24px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+ 
+}

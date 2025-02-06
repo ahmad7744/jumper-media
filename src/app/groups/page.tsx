@@ -1,20 +1,19 @@
 "use client";
 import React, { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import LocationCard from "@/components/locationCard/locationCard";
 import InputField from "@/components/inputField/inputField";
 import DropdownFilter from "@/components/DropdownFilter/DropdownFilter";
-import { Checkbox } from "@/components/ui/checkbox";
-import { CheckboxIndicator } from "@radix-ui/react-checkbox";
-import CustomRadioButton from "@/components/mainTable/cutomRadioButton";
 import GroupCard from "@/components/GroupCard/GroupCard";
 import Assets from "../../../public/assets/assets";
 import { useRouter } from 'next/navigation'
-import { usePathname } from "next/navigation";
+import Modal from "@/components/MoadalComponent/MoadalComponent";
+import { Payment } from "@/components/mainTable/columns";
 const GroupPage = () => {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [groupName, setGroupName] = useState("");
 
   const Groups = [
     {
@@ -64,6 +63,11 @@ const GroupPage = () => {
     },
 
   ];
+
+
+ 
+  
+
 
   const statusOptions = [
     { id: "all", label: "All", value: "All" },
@@ -144,6 +148,7 @@ const GroupPage = () => {
               className="border border-none 
                       bg-blue-700  text-zinc-300 Inter font-medium"
               size="sm"
+              onClick={() => setShowModal(true)}
             >
 
               <div dangerouslySetInnerHTML={{ __html: Assets.AddIcon }} />
@@ -162,6 +167,22 @@ const GroupPage = () => {
           <p className="text-neutral-50 Inter font-medium text-xl">No data found</p>
         )}
       </div>
+      {showModal &&
+        <Modal title="Create Group" onClose={() => setShowModal(false)}>
+          <div>
+            <InputField
+              id="search"
+              placeholder="Type name here..."
+              icon={false}
+              size="large"
+              value={groupName}
+              onChange={(e) => setGroupName(e.target.value)}
+              title="Group Name"
+            />
+
+          </div>
+        </Modal>
+      }
     </div>
   );
 };

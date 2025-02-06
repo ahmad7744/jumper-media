@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/chart";
 import Assets from "../../../public/assets/assets";
 
-// Default chart data
+
 const defaultChartData = [
     { time: "9AM", downloadSpeed: 186, uploadSpeed: 80 },
     { time: "10AM", downloadSpeed: 305, uploadSpeed: 200 },
@@ -33,7 +33,7 @@ const defaultChartData = [
 
 ];
 
-// Default chart configuration
+
 const defaultChartConfig = {
     desktop: {
         label: "Desktop",
@@ -87,7 +87,7 @@ const AreaChartComponent: React.FC<AreaChartProps> = ({
                     className="m-0"
                     accessibilityLayer
                     data={chartData}
-                    margin={{ left: 20, right: 20, top: 0, bottom: 0 }}
+                    margin={{ left: 20, right:20, top: 0, bottom: 0 }}
                 >
                     <CartesianGrid vertical={false} />
                     <XAxis
@@ -95,7 +95,7 @@ const AreaChartComponent: React.FC<AreaChartProps> = ({
                         tickLine={false}
                         axisLine={false}
                         tickMargin={8}
-                        tickFormatter={(value) => value.slice(0, 3)}
+                        tickFormatter={(value) => value.slice(0, 4)}
                     />
                     <ChartTooltip
                         cursor={false}

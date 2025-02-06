@@ -9,6 +9,7 @@ interface InputFieldProps {
     icon?: boolean;
     size?: 'small' | 'large';
     value: string;
+    title?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -19,12 +20,14 @@ const InputField: React.FC<InputFieldProps> = ({
     icon = false,
     size = 'large',
     value,
+    title,
     onChange
 }) => {
-    const sizeClasses = size === 'small' ? 'text-sm max-w-[260px]' : 'text-base w-full';
+    const sizeClasses = size === 'small' ? 'text-sm max-w-[260px]' : 'text-base w-full ';
 
     return (
-        <div className={`grid w-full items-center gap-1.5 ${sizeClasses}`}>
+        <div className={`grid w-full items-center gap-2.5 Inter ${sizeClasses}`}>
+             {title && <p className='text-zinc-200 text-sm font-normal'>{title}</p>}
             <div className="relative">
                 {icon && (
                     <div className="absolute left-2.5 top-2.5 h-4 w-4">
@@ -37,9 +40,9 @@ const InputField: React.FC<InputFieldProps> = ({
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
-                    className={`w-full placeholder:text-zinc-300 text-zinc-300 border border-zinc-800 bg-zinc-900 rounded-[8px] pl-8 `}
+                    className={`w-full placeholder:text-zinc-300 text-zinc-300 border border-zinc-800  rounded-[8px] ${size === 'small' ? 'pl-8 bg-zinc-900' : 'pl-4 bg-zinc-800 '} `}
                 />
-                
+
             </div>
         </div>
     );
