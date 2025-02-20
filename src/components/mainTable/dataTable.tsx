@@ -49,7 +49,7 @@ export function DataTable<TData extends { status: string, locations: string[] },
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
-    const [filterStatus, setFilterStatus] = React.useState<'All' | 'Online' | 'Offline'>('All')
+    const [filterStatus, setFilterStatus] = React.useState<'All' | 'Active' | 'Offline'>('All')
     const [selectedLocations, setSelectedLocations] = React.useState<string[]>([]);
 
 
@@ -98,7 +98,7 @@ export function DataTable<TData extends { status: string, locations: string[] },
 
     const options = [
         { id: "all", label: "All", value: "All" },
-        { id: "online", label: "Online", value: "Online" },
+        { id: "online", label: "Active", value: "Active" },
         { id: "offline", label: "Offline", value: "Offline" },
     ];
 

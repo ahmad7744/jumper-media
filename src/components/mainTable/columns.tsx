@@ -12,7 +12,7 @@ import Assets from "../../../public/assets/assets"
 export type Payment = {
     id: string
     phoneID: string
-    status: "Online" | "Offline"
+    status: "Active" | "Offline"
     name: string
     IPAddress: string
     LastActivity: string
@@ -59,7 +59,7 @@ export const columns: ColumnDef<Payment>[] = [
             return (
                 <div className="flex items-center">
                     <div
-                        className={`w-2 h-2 rounded-full ${status === "Online" ? "bg-green-500" : "bg-red-500"
+                        className={`w-2 h-2 rounded-full ${status === "Active" ? "bg-green-500" : "bg-red-500"
                             }`}
                     />
                     <span className="ml-2">{status}</span>
