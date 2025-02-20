@@ -7,17 +7,17 @@ import { RefreshCw, Settings } from "lucide-react"
 import Assets from "../../../public/assets/assets"
 
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+
 export type Payment = {
-    id: string
-    phoneID: string
-    status: "Active" | "Offline"
-    name: string
-    IPAddress: string
-    LastActivity: string
+    id: string;
+    phoneID: string;
+    status: "Active" | "Offline" | "Online"; 
+    name: string;
+    IPAddress: string;
+    LastActivity: string;
     locations: string[];
-}
+  };
+  
 
 export const columns: ColumnDef<Payment>[] = [
     {
@@ -54,7 +54,6 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey: "status",
         header: "STATUS",
         cell: ({ row }) => {
-            // Ensure that the status is a string
             const status = row.getValue("status") as string;
             return (
                 <div className="flex items-center">
