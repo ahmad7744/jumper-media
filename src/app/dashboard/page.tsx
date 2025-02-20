@@ -51,7 +51,7 @@ const Page = () => {
       ) : (
         <div className="p-10 w-full max-w-[1440px] mx-auto">
           <h1 className="text-neutral-50 Inter font-bold text-3xl">Dashboard</h1>
-          <div className="grid grid-cols-3 gap-6 mt-28 max-w-[1360px]">
+          <div className="grid grid-cols-3 gap-6 mt-80 max-w-[1360px]">
             <MetricCard
               valuePercent="+20% from last month"
               title="Total Phones"

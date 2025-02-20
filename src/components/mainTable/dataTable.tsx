@@ -247,7 +247,7 @@ export function DataTable<TData extends { status: string, locations: string[] },
 
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell className="text-neutral-50 Inter font-medium text-xs" key={cell.id}>
+                                        <TableCell className="text-neutral-50 Inter font-medium text-[10px]" key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
 
                                         </TableCell>
