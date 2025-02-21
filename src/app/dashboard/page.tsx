@@ -25,7 +25,7 @@ const Page = () => {
       const response = await getDevices(offset, devicesPerPage);
 
       const transformedData: TableHeader[] = response.devices.map((device) => ({
-        id: String(device.id),
+        id: device.id,
         phoneID: device.model,
         status: device.status === "active" ? "Active" : "Offline",
         name: device.name,
@@ -75,14 +75,14 @@ const Page = () => {
               className="border border-gray-700"
             />
             <MetricCard
-              title="Active"
+              title="Active Phones"
               value={activeDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OnlineIcon}
               className="border border-gray-700"
             />
             <MetricCard
-              title="Offline"
+              title="Offline Phones"
               value={inactiveDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OfflineIcon}

@@ -100,8 +100,8 @@ export function DataTable<TData extends { status: string, locations: string[] },
             columnVisibility,
             rowSelection,
         },
-        manualPagination: true, // Enable manual pagination
-        pageCount: totalPages, // Total number of pages
+        manualPagination: true, 
+        pageCount: totalPages, 
         initialState: {
             pagination: {
                 pageIndex,
@@ -113,7 +113,7 @@ export function DataTable<TData extends { status: string, locations: string[] },
                 typeof updater === "function"
                     ? updater({ pageIndex, pageSize: 3 }).pageIndex
                     : updater.pageIndex;
-            onPageChange(newPageIndex); // Trigger parent component to update page
+            onPageChange(newPageIndex); 
         },
     })
 
