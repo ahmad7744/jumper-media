@@ -8,7 +8,7 @@ import Assets from "../../../public/assets/assets"
 
 
 
-export type Payment = {
+export type TableHeader = {
     id: string;
     phoneID: string;
     status: "Active" | "Offline" | "Online"; 
@@ -19,7 +19,7 @@ export type Payment = {
   };
   
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<TableHeader>[] = [
     {
         id: "select",
         header: ({ table }) => (

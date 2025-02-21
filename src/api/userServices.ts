@@ -22,9 +22,10 @@ export const loginUser = async (
 };
 
 
-export const getDevices = async (): Promise<DevicesResponse> => {
+export const getDevices = async (offset: number = 0, limit: number = 4): Promise<DevicesResponse> => {
     try {
-        const response = await apiClient<DevicesResponse>(API_ENDPOINTS.GET_DEVICES, {
+        const url = `${API_ENDPOINTS.GET_DEVICES}?offset=${offset}&limit=${limit}&total_count=true&count_by_status=true`;
+        const response = await apiClient<DevicesResponse>(url, {
             method: "GET",
         });
 

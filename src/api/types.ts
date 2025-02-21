@@ -24,4 +24,10 @@ export interface Device {
     updated_at: string; 
 }
 
-export type DevicesResponse = Device[];
+export interface DevicesResponse {
+    devices: Device[];
+    total: number; 
+    active: number;
+    inactive: number;
+    in_maintenance: number;
+}

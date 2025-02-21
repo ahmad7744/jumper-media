@@ -37,13 +37,19 @@ import InputField from "../inputField/inputField"
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    pageIndex: number;
+    totalPages: number;
+    onPageChange: (newPageIndex: number) => void;
 }
 
 export function DataTable<TData extends { status: string, locations: string[] }, TValue>({
     columns,
     data,
+    pageIndex,
+    totalPages,
+    onPageChange,
 }: DataTableProps<TData, TValue>) {
- 
+
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -94,6 +100,21 @@ export function DataTable<TData extends { status: string, locations: string[] },
             columnVisibility,
             rowSelection,
         },
+        manualPagination: true, // Enable manual pagination
+        pageCount: totalPages, // Total number of pages
+        initialState: {
+            pagination: {
+                pageIndex,
+                pageSize: 4,
+            },
+        },
+        onPaginationChange: (updater) => {
+            const newPageIndex =
+                typeof updater === "function"
+                    ? updater({ pageIndex, pageSize: 3 }).pageIndex
+                    : updater.pageIndex;
+            onPageChange(newPageIndex); // Trigger parent component to update page
+        },
     })
 
     const options = [
@@ -104,8 +125,8 @@ export function DataTable<TData extends { status: string, locations: string[] },
 
     return (
         <div>
-            <div className="flex items-center py-5 justify-between max-w-[1360px]">
-            
+            <div className="flex items-center py-5  justify-between max-w-[1360px]">
+
                 <InputField
                     id="search"
                     placeholder="Search Phones"
@@ -265,7 +286,7 @@ export function DataTable<TData extends { status: string, locations: string[] },
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-between mt-6 max-w-[1360px]">
+            <div className="flex items-center justify-between pb-10 mt-6 max-w-[1360px]">
                 <div className="flex text-sm text-muted-foreground Inter text-neutral-400 font-medium">
                     {table.getFilteredSelectedRowModel().rows.length} of{" "}
                     {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -275,23 +296,23 @@ export function DataTable<TData extends { status: string, locations: string[] },
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
+                        onClick={() => onPageChange(pageIndex - 1)}
+                        disabled={pageIndex === 0}
                         className="bg-transparent text-neutral-400 font-medium border-neutral-800 border-[1px] rounded-md px-4 py-[6px]"
                     >
                         <ChevronLeft />
                     </Button>
 
                     {/* Page Numbers */}
-                    {Array.from({ length: table.getPageCount() }, (_, index) => (
+                    {Array.from({ length: totalPages }, (_, index) => (
                         <Button
                             variant="outline"
                             size="sm"
                             key={index}
-                            onClick={() => table.setPageIndex(index)}
-                            className={`rounded-md px-4 py-[6px] font-medium text-sm ${table.getState().pagination.pageIndex === index
-                                ? " gradient border hover:text-zinc-300 border-[#1F1F21] text-zinc-300"
-                                : "bg-transparent border border-[#1F1F21] text-neutral-400"
+                            onClick={() => onPageChange(index)}
+                            className={`rounded-md px-4 py-[6px] font-medium text-sm ${pageIndex === index
+                                    ? "gradient border hover:text-zinc-300 border-[#1F1F21] text-zinc-300"
+                                    : "bg-transparent border border-[#1F1F21] text-neutral-400"
                                 }`}
                         >
                             {index + 1}
@@ -302,8 +323,8 @@ export function DataTable<TData extends { status: string, locations: string[] },
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
+                        onClick={() => onPageChange(pageIndex + 1)}
+                        disabled={pageIndex === totalPages - 1}
                         className="bg-transparent text-neutral-400 font-medium border-neutral-800 border-[1px] rounded-md px-4 py-[6px]"
                     >
                         <ChevronRight />
