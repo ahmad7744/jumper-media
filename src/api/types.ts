@@ -31,3 +31,20 @@ export interface DevicesResponse {
     inactive: number;
     in_maintenance: number;
 }
+
+
+export interface LocationStats {
+    state: string;
+    total_devices: number;
+    active_devices: number;
+    inactive_devices: number;
+    overlapping_ips: number;
+    unique_ips: number;
+    last_ip_rotation: string | null;
+    cumulative_download_speed: number;
+    cumulative_upload_speed: number;
+}
+
+export interface LocationStatsResponse {
+    locations: LocationStats[];
+}
