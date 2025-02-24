@@ -123,7 +123,7 @@ export function GroupsTable({ title, data }: GroupsTableProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className="bg-[#0A0A0A] border border-neutral-800 mt-3 rounded-md shadow-lg w-[198px] p-1"
-              align="start"
+              align="end"
             >
               <CustomRadioButton
                 options={[

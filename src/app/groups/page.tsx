@@ -6,7 +6,7 @@ import DropdownFilter from "@/components/DropdownFilter/DropdownFilter";
 import GroupCard from "@/components/GroupCard/GroupCard";
 import Assets from "../../../public/assets/assets";
 import { useRouter } from "next/navigation";
-import Modal from "@/components/MoadalComponent/MoadalComponent";
+import Modal from "@/components/ModalComponent/ModalComponent";
 import TagSelector from "@/components/TagSelector/TagSelector";
 import { GroupsTable } from "@/components/GroupModalTable/GroupTable";
 const GroupPage = () => {

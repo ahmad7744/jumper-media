@@ -32,32 +32,37 @@ const Modal: React.FC<ModalProps> = ({ onClose, children, title }) => {
     return createPortal(
         <AnimatePresence>
             {isMounted && (
-                <motion.div 
-                    className="modal-overlay Inter fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+                <motion.div
+                    className="modal-overlay Inter fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 custom-scrollbar"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                 >
-                    <motion.div 
-                        className="modal-wrapper"
+                    <motion.div
+                        className="modal-wrapper w-full max-w-2xl" 
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.8, opacity: 0 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
-                        <div className="modal bg-zinc-900 p-6 rounded-lg shadow-lg">
+                        <div className="modal bg-zinc-900 p-6 rounded-lg shadow-lg 
+                            w-full max-h-[calc(100vh-80px)] overflow-y-auto"
+                        >
                             <div className="modal-header flex justify-between items-center">
-                                {title && <h1 className='text-zinc-200 text-2xl font-semibold'>{title}</h1>}
+                                {title && <h1 className="text-zinc-200 text-2xl font-semibold">{title}</h1>}
                                 <Button 
                                     variant={'outline'} 
                                     size={'icon'} 
-                                    className='bg-[#FFFFFF0D] rounded-full items-center text-zinc-200 border-none' 
+                                    className="bg-[#FFFFFF0D] rounded-full items-center text-zinc-200 border-none"
                                     onClick={() => { setIsMounted(false); setTimeout(onClose, 300); }}
                                 >
                                     <div dangerouslySetInnerHTML={{ __html: Assets.CrossIcon }} />
                                 </Button>
                             </div>
-                            <div className="modal-body mt-4">{children}</div>
+
+                            <div className="modal-body mt-4 overflow-y-auto ">
+                                {children}
+                            </div>
                         </div>
                     </motion.div>
                 </motion.div>
