@@ -5,15 +5,17 @@ import InputField from "@/components/inputField/inputField";
 import DropdownFilter from "@/components/DropdownFilter/DropdownFilter";
 import GroupCard from "@/components/GroupCard/GroupCard";
 import Assets from "../../../public/assets/assets";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import Modal from "@/components/MoadalComponent/MoadalComponent";
-import { Payment } from "@/components/mainTable/columns";
+import TagSelector from "@/components/TagSelector/TagSelector";
+import { GroupsTable } from "@/components/GroupModalTable/GroupTable";
 const GroupPage = () => {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [groupName, setGroupName] = useState("");
+  const [selectedTag, setSelectedTag] = useState<string | null>("Low Speed");
 
   const Groups = [
     {
@@ -61,13 +63,7 @@ const GroupPage = () => {
       downloadSpeed: "12.1",
       uploadSpeed: "5.1",
     },
-
   ];
-
-
- 
-  
-
 
   const statusOptions = [
     { id: "all", label: "All", value: "All" },
@@ -77,13 +73,64 @@ const GroupPage = () => {
     { id: "low_speed", label: "Low Speed", value: "Low Speed" },
   ];
 
-  const NameOptions = Array.from(new Set(Groups.map(group => group.title)))
-    .map((title) => ({
-      id: title,
-      label: title,
-      value: title,
-    }));
+  const NameOptions = Array.from(
+    new Set(Groups.map((group) => group.title))
+  ).map((title) => ({
+    id: title,
+    label: title,
+    value: title,
+  }));
 
+  const samplePhones = [
+    {
+      id: "PHN001",
+      name: "GALAXY A14",
+      model: "Galaxy A14",
+      status: "Online",
+      ip: "192.168.1.101",
+      location: "San Diego, CA",
+    },
+    {
+      id: "PHN002",
+      name: "GALAXY A14",
+      model: "iPhone 12",
+      status: "Offline",
+      ip: "192.168.1.102",
+      location: "New York, NY",
+    },
+    {
+      id: "PHN003",
+      name: "GALAXY A14",
+      model: "Pixel 6",
+      status: "Online",
+      ip: "192.168.1.103",
+      location: "Los Angeles, CA",
+    },
+    {
+      id: "PHN003",
+      name: "GALAXY A14",
+      model: "Pixel 6",
+      status: "Online",
+      ip: "192.168.1.103",
+      location: "Los Angeles, CA",
+    },
+    {
+      id: "PHN003",
+      name: "GALAXY A14",
+      model: "Pixel 6",
+      status: "Online",
+      ip: "192.168.1.103",
+      location: "Los Angeles, CA",
+    },
+    {
+      id: "PHN003",
+      name: "GALAXY A14",
+      model: "Pixel 6",
+      status: "Online",
+      ip: "192.168.1.103",
+      location: "Los Angeles, CA",
+    },
+  ];
 
   const filteredGroups = useMemo(() => {
     let result = Groups.filter((group) => {
@@ -95,7 +142,8 @@ const GroupPage = () => {
         group.downloadSpeed.toString().includes(search) ||
         group.uploadSpeed.toString().includes(search);
 
-      const matchesStatus = filterStatus === "All" || group.priorityLabel === filterStatus;
+      const matchesStatus =
+        filterStatus === "All" || group.priorityLabel === filterStatus;
 
       return matchesSearch && matchesStatus;
     });
@@ -125,7 +173,6 @@ const GroupPage = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
           <div className="gap-3 flex">
-            {/* Filter for Group Status */}
             <DropdownFilter
               title="Sort by"
               options={NameOptions}
@@ -139,7 +186,9 @@ const GroupPage = () => {
               title="Status"
               options={statusOptions}
               selectedValue={filterStatus}
-              onChange={(value) => setFilterStatus(Array.isArray(value) ? value[0] : value)}
+              onChange={(value) =>
+                setFilterStatus(Array.isArray(value) ? value[0] : value)
+              }
               align="end"
             />
 
@@ -150,24 +199,25 @@ const GroupPage = () => {
               size="sm"
               onClick={() => setShowModal(true)}
             >
-
               <div dangerouslySetInnerHTML={{ __html: Assets.AddIcon }} />
-
               New Group
             </Button>
-
           </div>
         </div>
       </div>
 
       <div className="mx-auto w-full max-w-[1160px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 py-10">
         {filteredGroups.length > 0 ? (
-          filteredGroups.map((group, index) => <GroupCard onPress={handleGroupClick} key={index} {...group} />)
+          filteredGroups.map((group, index) => (
+            <GroupCard onPress={handleGroupClick} key={index} {...group} />
+          ))
         ) : (
-          <p className="text-neutral-50 Inter font-medium text-xl">No data found</p>
+          <p className="text-neutral-50 Inter font-medium text-xl">
+            No data found
+          </p>
         )}
       </div>
-      {showModal &&
+      {showModal && (
         <Modal title="Create Group" onClose={() => setShowModal(false)}>
           <div>
             <InputField
@@ -179,10 +229,24 @@ const GroupPage = () => {
               onChange={(e) => setGroupName(e.target.value)}
               title="Group Name"
             />
-
+          </div>
+          <div className="mt-4">
+            <TagSelector
+              title={"Select Tag"}
+              selectedTag={selectedTag}
+              onSelect={setSelectedTag}
+            />
+          </div>
+          <div>
+            <GroupsTable data={samplePhones} title="Add Phones"/>
+          </div>
+          <div className="flex">
+            <Button className="bg-blue-600 text-white w-full">
+              Create Group
+            </Button>
           </div>
         </Modal>
-      }
+      )}
     </div>
   );
 };

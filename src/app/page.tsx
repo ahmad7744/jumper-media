@@ -56,6 +56,7 @@ const Page: React.FC = () => {
     };
 
     return (
+        <div className="flex items-center justify-center mx-auto w-ful min-h-screen p-4">
         <div className="flex items-center justify-between mx-auto w-full max-w-[1440px] p-4">
             <div className="justify-center w-[50%] mx-auto items-center">
                 <Header heading="Welcome Back!" subheading="Enter your username and password to continue." />
@@ -123,9 +124,10 @@ const Page: React.FC = () => {
                 </div> */}
             </div>
 
-            <div>
+            <div className="">
                 <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/LoginImage.png" alt="Login" />
             </div>
+        </div>
         </div>
     );
 };

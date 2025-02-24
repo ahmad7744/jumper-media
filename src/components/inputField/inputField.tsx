@@ -10,6 +10,7 @@ interface InputFieldProps {
     size?: 'small' | 'large';
     value: string;
     title?: string;
+    backgroundColor?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,6 +22,7 @@ const InputField: React.FC<InputFieldProps> = ({
     size = 'large',
     value,
     title,
+    backgroundColor = 'light',
     onChange
 }) => {
     const sizeClasses = size === 'small' ? 'text-sm max-w-[260px]' : 'text-base w-full ';
@@ -40,7 +42,7 @@ const InputField: React.FC<InputFieldProps> = ({
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
-                    className={`w-full placeholder:text-zinc-300 text-zinc-300 border border-zinc-800  rounded-[8px] ${size === 'small' ? 'pl-8 bg-zinc-900' : 'pl-4 bg-zinc-800 '} `}
+                    className={`w-full placeholder:text-zinc-300 text-zinc-300 border border-zinc-800  rounded-[8px] ${backgroundColor === 'light' ? 'bg-zinc-800' : 'bg-zinc-800'} ${size === 'small' ? 'pl-8 bg-zinc-800' : 'pl-4  '} `}
                 />
 
             </div>
