@@ -31,7 +31,7 @@ const Page = () => {
       const transformedData: TableHeader[] = response.devices.map((device) => ({
         id: device.id,
         phoneID: device.model,
-        status: device.status === "active" ? "Online" : "Offline",
+        status: device.status === "active" ? "Active" : "Offline",
         name: device.name,
         IPAddress: device.ip_address,
         LastActivity: device.updated_at,

@@ -394,7 +394,7 @@ export function DataTable<
       </div>
 
       {showModal && selectedRow && (
-       <DeviceSettingsModal onClose={() => toggleModal()} proxyData={proxyData} />
+       <DeviceSettingsModal onClose={() => toggleModal?.()} proxyData={proxyData} />
 
       )}
     </div>
