@@ -38,7 +38,7 @@ import CustomRadioButton from "./cutomRadioButton";
 import Assets from "../../../public/assets/assets";
 import { Checkbox, CheckboxIndicator } from "@radix-ui/react-checkbox";
 import InputField from "../inputField/inputField";
-import DeviceSettingsModal from "./DeviceSettingsModal";
+import DeviceSettingsModal from "../DeviceSettingModal/DeviceSettingsModal";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   showModal: boolean;

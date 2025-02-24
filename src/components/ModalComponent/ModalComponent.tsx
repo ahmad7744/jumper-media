@@ -5,14 +5,16 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Assets from "../../../public/assets/assets";
 import { Button } from "../ui/button";
-
+import { ArrowLeft } from "lucide-react";
 type ModalProps = {
   onClose: () => void;
   children: React.ReactNode;
   title?: string;
+  showBackArrow?: boolean;
+  onBack?: () => void;
 };
 
-const Modal: React.FC<ModalProps> = ({ onClose, children, title }) => {
+const Modal: React.FC<ModalProps> = ({ onClose, children, title, showBackArrow = false, onBack }) => {
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -50,14 +52,23 @@ const Modal: React.FC<ModalProps> = ({ onClose, children, title }) => {
                             w-full max-h-[calc(100vh-80px)] overflow-y-auto"
             >
               <div className="modal-header flex justify-between items-center">
-                {title && (
-                  <h1 className="text-zinc-200 text-2xl font-semibold">
-                    {title}
-                  </h1>
-                )}
+                <div className="flex items-center gap-2">
+                  {showBackArrow && onBack && (
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="bg-[#FFFFFF0D] rounded-lg text-zinc-200 border-none"
+                      onClick={onBack}
+                    >
+                      <ArrowLeft />
+                    </Button>
+                  )}
+                  {title && <h1 className="text-zinc-200 text-2xl font-semibold">{title}</h1>}
+                </div>
+
                 <Button
-                  variant={"outline"}
-                  size={"icon"}
+                  variant="outline"
+                  size="icon"
                   className="bg-[#FFFFFF0D] rounded-full items-center text-zinc-200 border-none"
                   onClick={() => {
                     setIsMounted(false);
@@ -68,7 +79,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, children, title }) => {
                 </Button>
               </div>
 
-              <div className="modal-body  overflow-y-auto ">{children}</div>
+              <div className="modal-body ">{children}</div>
             </div>
           </motion.div>
         </motion.div>
