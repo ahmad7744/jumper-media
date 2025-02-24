@@ -107,7 +107,7 @@ const GroupPage = () => {
       location: "Los Angeles, CA",
     },
     {
-      id: "PHN003",
+      id: "PHN004",
       name: "GALAXY A14",
       model: "Pixel 6",
       status: "Online",
@@ -115,7 +115,7 @@ const GroupPage = () => {
       location: "Los Angeles, CA",
     },
     {
-      id: "PHN003",
+      id: "PHN005",
       name: "GALAXY A14",
       model: "Pixel 6",
       status: "Online",
@@ -123,7 +123,7 @@ const GroupPage = () => {
       location: "Los Angeles, CA",
     },
     {
-      id: "PHN003",
+      id: "PHN006",
       name: "GALAXY A14",
       model: "Pixel 6",
       status: "Online",
@@ -241,7 +241,7 @@ const GroupPage = () => {
             <GroupsTable data={samplePhones} title="Add Phones"/>
           </div>
           <div className="flex">
-            <Button className="bg-blue-600 text-white w-full">
+            <Button className="bg-blue-600 text-white w-full" onClick={() => setShowModal(false)}>
               Create Group
             </Button>
           </div>
