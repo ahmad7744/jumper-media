@@ -7,6 +7,7 @@ import { AddedProxysTable } from "../AddProxyModalTable/ProxyTable";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { AddProxyForm } from "./AddProxyForm";
+import ChangeIp from "./ChangeIp";
 
 type DeviceSettingsModalProps = {
   onClose: () => void;
@@ -61,7 +62,7 @@ const DeviceSettingsModal: React.FC<DeviceSettingsModalProps> = ({
             />
           ) : (
             <div className="text-zinc-300 text-lg text-center py-10">
-              Change your IP here
+              <ChangeIp />
             </div>
           )}
         </>

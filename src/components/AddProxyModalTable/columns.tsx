@@ -44,7 +44,7 @@ export const getColumns = (): ColumnDef<Proxy, any>[] => [
             className="text-zinc-300 border border-zinc-700"
             onClick={handleCopy}
           >
-            {copied ? <ClipboardCheck size={16} /> : <Clipboard size={16} />}
+            {copied ? <ClipboardCheck className="w-4 h-4 text-green-500" />: <Clipboard size={16} />}
           </Button>
           <Button
             size="icon"
