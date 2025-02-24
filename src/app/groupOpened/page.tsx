@@ -1,4 +1,7 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { getDevices } from "@/api/userServices";
 import AreaChartComponent from "@/components/ChartComponent/ChartComponent";
 import LocationCard from "@/components/locationCard/locationCard";
 import { columns, TableHeader } from "@/components/mainTable/columns";
@@ -6,173 +9,115 @@ import { DataTable } from "@/components/mainTable/dataTable";
 import StatCard from "@/components/StatCard/StatCard";
 import { Button } from "@/components/ui/button";
 import Assets from "../../../public/assets/assets";
-const page = () => {
- 
+import LoadingIndicator from "@/components/LoadingIndicator/LoadingIndicator";
 
-   const data: TableHeader[] = [
-      {
-        id: "1",
-        status: "Online",
-        phoneID: "PHN001",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["San Diego, CA"],
-      },
-      {
-        id: "2",
-        status: "Online",
-        phoneID: "PHN002",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["Angola"],
-  
-  
-      },
-      {
-        id: "3",
-        status: "Online",
-        phoneID: "PHN003",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["San Diego, CA"]
-  
-  
-      },
-      {
-        id: "4",
-        status: "Online",
-        phoneID: "PHN004",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["Angola"],
-  
-  
-      },
-      {
-        id: "5",
-        status: "Online",
-        phoneID: "PHN005",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["Angola"],
-  
-  
-  
-      },
-      {
-        id: "4",
-        status: "Online",
-        phoneID: "PHN006",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["San Diego, CA"]
-  
-  
-      },
-      {
-        id: "6",
-        status: "Offline",
-        phoneID: "PHN007",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["St. Louis, MO"]
-  
-  
-  
-      },
-      {
-        id: "7",
-        status: "Offline",
-        phoneID: "PHN008",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["Chicago, IL"]
-  
-      },
-      {
-        id: "8",
-        status: "Online",
-        phoneID: "PHN009",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["New York, NY"]
-  
-  
-  
-      },
-      {
-        id: "9",
-        status: "Online",
-        phoneID: "PHN010",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["San Diego, CA"]
-  
-  
-  
-      },
-      {
-        id: "10",
-        status: "Online",
-        phoneID: "PHN011",
-        name: "Galaxy A14",
-        IPAddress: "192.168.1.101",
-        LastActivity: "2025-01-13 10:45:12",
-        locations: ["San Diego, CA"]
-  
-      },
-    ];
+const Page = () => {
+  const [data, setData] = useState<TableHeader[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [totalDevices, setTotalDevices] = useState<number>(0);
+  const [activeDevices, setActiveDevices] = useState<number>(0);
+  const [inactiveDevices, setInactiveDevices] = useState<number>(0);
 
+  const devicesPerPage = 4;
+
+  const fetchDevices = async (pageIndex: number) => {
+    try {
+      setLoading(true);
+      const offset = pageIndex * devicesPerPage;
+      const response = await getDevices(offset, devicesPerPage);
+
+      const transformedData: TableHeader[] = response.devices.map((device) => ({
+        id: device.id,
+        phoneID: device.model,
+        status: device.status === "active" ? "Online" : "Offline",
+        name: device.name,
+        IPAddress: device.ip_address,
+        LastActivity: device.updated_at,
+        locations: Array.isArray(device.city) ? device.city : [device.city],
+      }));
+
+      setData(transformedData);
+      setTotalDevices(response.total);
+      setActiveDevices(response.active);
+      setInactiveDevices(response.inactive);
+    } catch (err: any) {
+      console.error("Error fetching devices:", err.message);
+      setError("Failed to fetch devices");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDevices(pageIndex);
+  }, [pageIndex]);
+
+  const handlePageChange = (newPageIndex: number) => {
+    setPageIndex(newPageIndex);
+  };
 
   return (
     <div className="Inter p-10 w-full max-w-[1160px] mx-auto">
-      <h1 className="text-zinc-400 font-normal text-xs">Groups / <span className="text-zinc-200 font-medium"> High Speed</span></h1>
-      <div className="flex items-center justify-between max-w-[1160px] mx-auto mt-7 pb-10">
+      <h1 className="text-zinc-400 font-normal text-xs">
+        Groups / <span className="text-zinc-200 font-medium">High Speed</span>
+      </h1>
 
+      <div className="flex items-center justify-between max-w-[1160px] mx-auto mt-7 pb-10">
         <div className="flex items-center gap-3">
           <p className="text-zinc-200 text-[28px] font-semibold">High Speed</p>
           <div className="bg-zinc-800 px-4 py-[6px] rounded-full items-center">
             <p className="text-xs text-zinc-300 font-semibold">#Priority</p>
           </div>
         </div>
-        <Button variant="outline" className="bg-transparent border Inter font-medium border-neutral-800 text-zinc-300" size="sm">
+        <Button
+          variant="outline"
+          className="bg-transparent border Inter font-medium border-neutral-800 text-zinc-300"
+          size="sm"
+        >
           <div dangerouslySetInnerHTML={{ __html: Assets.EditIcon }} /> Edit Group
         </Button>
       </div>
-      <StatCard
-        totalPhones={"2,394"}
-        activePhones={573}
-        offlinePhones={"2,350"}
-        percentageChange="20"
 
-      />
-      <div className="flex items-center justify-between gap-4 max-w-[1160px] mt-4">
-        <LocationCard
-          city="IP ADDRESS"
-          devices={2384}
-          uniqueIps={1620}
-          overlappingIps={774}
-          IP="All IPs"
-          size="small"
-        />
-        <AreaChartComponent />
+      {loading ? (
+        <LoadingIndicator message="Loading Devices..." />
+      ) : (
+        <>
+          <StatCard
+            totalPhones={totalDevices.toString()}
+            activePhones={activeDevices.toString()}
+            offlinePhones={inactiveDevices.toString()}
+            percentageChange="20"
+          />
 
-      </div>
-      <DataTable columns={columns} data={data} />
+          <div className="flex items-center justify-between gap-4 max-w-[1160px] mt-4">
+            <LocationCard
+              city="IP ADDRESS"
+              devices={totalDevices}
+              uniqueIps={1620}
+              overlappingIps={774}
+              IP="All IPs"
+              size="small"
+            />
+            <AreaChartComponent />
+          </div>
 
-
+          {error ? (
+            <p className="text-red-500">{error}</p>
+          ) : (
+            <DataTable
+              columns={columns((toggleModal) => {})}
+              data={data}
+              pageIndex={pageIndex}
+              totalPages={Math.ceil(totalDevices / devicesPerPage)}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
 
-export default page;
+export default Page;

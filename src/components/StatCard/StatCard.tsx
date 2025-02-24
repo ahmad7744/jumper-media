@@ -3,7 +3,7 @@ import React from 'react'
 interface OpenCardProps {
     totalPhones: string;
     percentageChange: string;
-    activePhones: number;
+    activePhones: number | string;
     offlinePhones: string;
 }
 

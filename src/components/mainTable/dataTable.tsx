@@ -41,10 +41,10 @@ import InputField from "../inputField/inputField";
 import DeviceSettingsModal from "../DeviceSettingModal/DeviceSettingsModal";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  showModal: boolean;
-  toggleModal: () => void;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  selectedRow: TData | null;
+  showModal?: boolean;
+  toggleModal?: () => void;
+  setShowModal?: Dispatch<SetStateAction<boolean>>;
+  selectedRow?: TData | null;
   data: TData[];
   pageIndex: number;
   totalPages: number;
