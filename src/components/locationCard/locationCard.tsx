@@ -3,33 +3,32 @@ import Assets from '../../../public/assets/assets';
 import StatusBadge from '../StatusBadge/StatusBadge';
 
 interface LocationCardProps {
-    city: string;
+    city?: string;  
     lastActivity?: string;
     status?: string;
-    devices: number;
-    uniqueIps: number;
-    overlappingIps: number;
+    devices?: number;
+    uniqueIps?: number;
+    overlappingIps?: number;
     downloadSpeed?: string;
     uploadSpeed?: string;
-    IP: string;
+    IP?: string;
     size?: 'small' | 'large';
     onPress?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const LocationCard: React.FC<LocationCardProps> = ({
-    city,
-    lastActivity,
-    status,
-    devices,
-    uniqueIps,
-    overlappingIps,
-    downloadSpeed,
-    uploadSpeed,
+    city = "Unknown",
+    devices = 0,
+    uniqueIps = 0,
+    overlappingIps = 0,
+    downloadSpeed = "N/A",
+    uploadSpeed = "N/A",
+    IP = "Not Available",
+    size = 'large',
     onPress,
-    IP = "Devices",
-    size ='large'
+    lastActivity,
+    status
 }) => {
-
     const sizeClasses = size === 'large' ? 'text-2xl font-semibold ' : 'text-xs font-medium ';
 
     return (

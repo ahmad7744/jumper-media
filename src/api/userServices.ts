@@ -1,6 +1,6 @@
 import apiClient from "./apiClient";
 import { API_ENDPOINTS } from "./endPoint";
-import { DevicesResponse, LoginPayload, LoginResponse } from "./types";
+import { DevicesResponse, LocationStatsResponse, LoginPayload, LoginResponse } from "./types";
 
 
 export const loginUser = async (
@@ -33,6 +33,21 @@ export const getDevices = async (offset: number = 0, limit: number = 4): Promise
         return response;
     } catch (error: any) {
         console.error("Error Fetching Devices:", error.message);
+        throw error;
+    }
+};
+
+
+export const getLocationStats = async (): Promise<LocationStatsResponse> => {
+    try {
+        const response = await apiClient<LocationStatsResponse>(API_ENDPOINTS.GET_LOCATIONS, {
+            method: "GET",
+        });
+
+        console.log("Location Stats Fetched:", response);
+        return response;
+    } catch (error: any) {
+        console.error("Error Fetching Location Stats:", error.message);
         throw error;
     }
 };

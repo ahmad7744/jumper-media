@@ -7,7 +7,6 @@ import GroupCard from "@/components/GroupCard/GroupCard";
 import Assets from "../../../public/assets/assets";
 import { useRouter } from 'next/navigation'
 import Modal from "@/components/MoadalComponent/MoadalComponent";
-import { Payment } from "@/components/mainTable/columns";
 const GroupPage = () => {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");

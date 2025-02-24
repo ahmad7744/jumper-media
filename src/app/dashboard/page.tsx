@@ -6,6 +6,7 @@ import { columns, TableHeader } from "@/components/mainTable/columns";
 import { DataTable } from "@/components/mainTable/dataTable";
 import { useEffect, useState } from "react";
 import Assets from "../../../public/assets/assets";
+import LoadingIndicator from "@/components/LoadingIndicator/LoadingIndicator";
 
 const Page = () => {
   const [data, setData] = useState<TableHeader[]>([]);
@@ -59,10 +60,8 @@ const Page = () => {
     <div className="w-full h-screen flex justify-center items-center ">
       {loading ? (
 
-        <div className="flex flex-col items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-50"></div>
-          <p className="text-gray-400 mt-4">Loading devices...</p>
-        </div>
+        <LoadingIndicator message="Loading Devices..." />
+
       ) : (
         <div className="p-10 w-full h-full max-w-[1160px] mx-auto">
           <h1 className="text-neutral-50 Inter font-bold text-3xl">Dashboard</h1>

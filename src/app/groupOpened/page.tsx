@@ -1,17 +1,15 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useSearchParams } from "next/navigation";
-import React from "react";
-import Assets from "../../../public/assets/assets";
-import LocationCard from "@/components/locationCard/locationCard";
 import AreaChartComponent from "@/components/ChartComponent/ChartComponent";
+import LocationCard from "@/components/locationCard/locationCard";
+import { columns, TableHeader } from "@/components/mainTable/columns";
 import { DataTable } from "@/components/mainTable/dataTable";
-import { columns, Payment } from "@/components/mainTable/columns";
 import StatCard from "@/components/StatCard/StatCard";
+import { Button } from "@/components/ui/button";
+import Assets from "../../../public/assets/assets";
 const page = () => {
  
 
-   const data: Payment[] = [
+   const data: TableHeader[] = [
       {
         id: "1",
         status: "Online",
