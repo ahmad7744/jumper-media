@@ -9,12 +9,7 @@ import {
   ColumnDef,
 } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +21,6 @@ import CustomRadioButton from "../mainTable/cutomRadioButton";
 import { getColumns } from "./columns";
 import { Phone } from "./columns";
 
-
 interface GroupsTableProps {
   title?: string;
   data: Phone[];
@@ -34,11 +28,13 @@ interface GroupsTableProps {
 
 export function GroupsTable({ title, data }: GroupsTableProps) {
   const [selectedPhones, setSelectedPhones] = useState<string[]>([]);
-  const [filterStatus, setFilterStatus] = useState<"All" | "Online" | "Offline">("All");
+  const [filterStatus, setFilterStatus] = useState<
+    "All" | "Online" | "Offline"
+  >("All");
   const [nameFilter, setNameFilter] = useState<string>("id");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-      const togglePhoneSelection = (id: string) => {
+  const togglePhoneSelection = (id: string) => {
     setSelectedPhones((prev) =>
       prev.includes(id)
         ? prev.filter((phoneId) => phoneId !== id)
@@ -48,8 +44,8 @@ export function GroupsTable({ title, data }: GroupsTableProps) {
 
   const filteredData = useMemo(() => {
     return data
-      .filter((phone) => 
-        filterStatus === "All" || phone.status === filterStatus
+      .filter(
+        (phone) => filterStatus === "All" || phone.status === filterStatus
       )
       .filter((phone) =>
         phone.location.toLowerCase().includes(searchQuery.toLowerCase())
@@ -64,9 +60,11 @@ export function GroupsTable({ title, data }: GroupsTableProps) {
     { id: "location", label: "Location", value: "location" },
   ];
 
-  const columns = useMemo(() => getColumns(selectedPhones, togglePhoneSelection), [selectedPhones]);
+  const columns = useMemo(
+    () => getColumns(selectedPhones, togglePhoneSelection),
+    [selectedPhones]
+  );
 
-  
   const table = useReactTable({
     data: filteredData,
     columns,
@@ -146,15 +144,24 @@ export function GroupsTable({ title, data }: GroupsTableProps) {
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} className="border border-none">
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-neutral-50 Inter font-medium text-[10px]">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <TableCell
+                      key={cell.id}
+                      className="text-neutral-50 Inter font-medium text-[10px]"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -164,7 +171,9 @@ export function GroupsTable({ title, data }: GroupsTableProps) {
       </div>
 
       <div className="flex justify-between items-center py-4">
-        <span className="text-sm text-neutral-400">{selectedPhones.length} Phones Added</span>
+        <span className="text-sm text-neutral-400">
+          {selectedPhones.length} Phones Added
+        </span>
       </div>
     </div>
   );

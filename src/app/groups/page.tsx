@@ -8,7 +8,7 @@ import Assets from "../../../public/assets/assets";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/ModalComponent/ModalComponent";
 import TagSelector from "@/components/TagSelector/TagSelector";
-import { GroupsTable } from "@/components/GroupModalTable/GroupTable";
+import { GroupsTable } from "@/components/AddGroupModalTable/GroupTable";
 const GroupPage = () => {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
@@ -238,10 +238,13 @@ const GroupPage = () => {
             />
           </div>
           <div>
-            <GroupsTable data={samplePhones} title="Add Phones"/>
+            <GroupsTable data={samplePhones} title="Add Phones" />
           </div>
           <div className="flex">
-            <Button className="bg-blue-600 text-white w-full" onClick={() => setShowModal(false)}>
+            <Button
+              className="bg-blue-600 text-white w-full"
+              onClick={() => setShowModal(false)}
+            >
               Create Group
             </Button>
           </div>

@@ -15,6 +15,13 @@ const Page = () => {
   const [totalDevices, setTotalDevices] = useState<number>(0);
   const [activeDevices, setActiveDevices] = useState<number>(0);
   const [inactiveDevices, setInactiveDevices] = useState<number>(0);
+  const [selectedRow, setSelectedRow] = useState<TableHeader | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const toggleModal = (row?: TableHeader) => {
+    setSelectedRow(row || null);
+    setShowModal((prev) => !prev);
+  };
 
   const devicesPerPage = 4;
 
@@ -38,7 +45,6 @@ const Page = () => {
       setTotalDevices(response.total);
       setActiveDevices(response.active);
       setInactiveDevices(response.inactive);
-
     } catch (err: any) {
       console.error("Error fetching devices:", err.message);
       setError("Failed to fetch devices");
@@ -58,14 +64,15 @@ const Page = () => {
   return (
     <div className="w-full h-screen flex justify-center items-center ">
       {loading ? (
-
         <div className="flex flex-col items-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-50"></div>
           <p className="text-gray-400 mt-4">Loading devices...</p>
         </div>
       ) : (
         <div className="p-10 w-full h-full max-w-[1160px] mx-auto">
-          <h1 className="text-neutral-50 Inter font-bold text-3xl">Dashboard</h1>
+          <h1 className="text-neutral-50 Inter font-bold text-3xl">
+            Dashboard
+          </h1>
           <div className="grid grid-cols-3 gap-6 mt-4 max-w-[1160px] mx-auto">
             <MetricCard
               valuePercent="+20% from last month"
@@ -95,8 +102,12 @@ const Page = () => {
           {error ? (
             <p className="text-red-500">{error}</p>
           ) : (
-            <DataTable
-              columns={columns}
+            <DataTable<TableHeader, unknown>
+              columns={columns(toggleModal)}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              selectedRow={selectedRow}
+              toggleModal={toggleModal}
               data={data}
               pageIndex={pageIndex}
               totalPages={Math.ceil(totalDevices / devicesPerPage)}
