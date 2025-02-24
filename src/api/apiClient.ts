@@ -1,4 +1,4 @@
-const BASE_URL = 'http://139.162.9.129/v1';
+const BASE_URL = 'https://proxy.homlndr.com/v1';
 
 interface ApiOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
