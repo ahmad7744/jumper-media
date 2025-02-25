@@ -9,7 +9,7 @@ import Assets from "../../public/assets/assets";
 import LoadingIndicator from "@/components/LoadingIndicator/LoadingIndicator";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ModalComponent/ModalComponent";
-import { Clipboard, ClipboardCheck, Copy, Plus } from "lucide-react";
+import { CopyCheck, CopyIcon, Plus } from "lucide-react";
 
 const Page = () => {
   const [data, setData] = useState<TableData[]>([]);
@@ -130,21 +130,21 @@ const Page = () => {
       )}
 
       {isModalOpen && (
-        <Modal onClose={toggleModal} title="Add Device">
+        <Modal onClose={toggleModal} title="Add New Device">
           <h3 className="mb-2 text-zinc-200 text-lg font-medium">Device Key</h3>
 
-          <div className="flex items-center space-x-2 bg-zinc-800 rounded-md px-3 text-sm border-[1px] border-[#FFFFFF0F]">
-            <div className="w-full bg-zinc-800 text-zinc-300 rounded-md px-2 py-2 text-sm">
+          <div className="flex items-center space-x-2 bg-zinc-800 rounded-lg  text-sm border-[1px] border-[#FFFFFF0F]">
+            <div className="w-full bg-zinc-800 text-zinc-300 rounded-md px-6 py-4 text-sm">
               {deviceKey}
             </div>
 
             <div
               onClick={handleCopy}
-              className="flex items-center w-28 text-zinc-300 min-h-full border-l-[1px] py-2 pl-2 border-[#323238] cursor-pointer"
+              className="flex items-center justify-center w-44 text-zinc-300 min-h-full border-l-[1px] py-4 px-3 border-[#323238] cursor-pointer"
             >
               {copied ? (
                 <>
-                  <ClipboardCheck
+                  <CopyCheck
                     className="mr-2 hover:text-zinc-200"
                     size={20}
                   />
@@ -152,20 +152,20 @@ const Page = () => {
                 </>
               ) : (
                 <>
-                  <Clipboard className="mr-2  hover:text-zinc-200" size={20} />{" "}
-                  <span className="text-xs text-zinc-300 flex-1">Copy Key</span>
+                  <CopyIcon className="mr-2  hover:text-zinc-200" size={20} />{" "}
+                  <span className="text-xs text-zinc-300 ">Copy Key</span>
                 </>
               )}
             </div>
           </div>
 
-          <div className="text-gray-300 mt-4">
-            <h3 className="mb-2 text-zinc-200 text-lg font-medium">
+          <div className="text-gray-300 mt-8">
+            <h3 className="mb-2 text-zinc-200 text-md font-medium">
               How to Add a Device
             </h3>
-            <ul className="bg-zinc-800 rounded-md list-disc list-inside pl-5 py-6 text-zinc-300 text-sm space-y-2 border-[1px] border-[#FFFFFF0F]">
+            <ul className="bg-zinc-800 rounded-lg list-disc list-inside pl-5 py-7 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
               <li>Copy the device key above</li>
-              <li>Paste the key in the appropriate app</li>
+              <li>Paste the key in the __ app</li>
               <li>Follow the remaining instructions in the app</li>
             </ul>
           </div>
