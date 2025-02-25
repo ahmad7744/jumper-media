@@ -2,27 +2,19 @@
 
 import { getDevices } from "@/api/userServices";
 import MetricCard from "@/components/Card/Card";
-import { columns, TableHeader } from "@/components/mainTable/columns";
+import {  TableData } from "@/components/mainTable/columns";
 import { DataTable } from "@/components/mainTable/dataTable";
 import { useEffect, useState } from "react";
 import Assets from "../../../public/assets/assets";
 import LoadingIndicator from "@/components/LoadingIndicator/LoadingIndicator";
-import withAuth from "@/hooks/withAuth";
 const Page = () => {
-  const [data, setData] = useState<TableHeader[]>([]);
+  const [data, setData] = useState<TableData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [totalDevices, setTotalDevices] = useState<number>(0);
   const [activeDevices, setActiveDevices] = useState<number>(0);
   const [inactiveDevices, setInactiveDevices] = useState<number>(0);
-  const [selectedRow, setSelectedRow] = useState<TableHeader | null>(null);
-  const [showModal, setShowModal] = useState<boolean>(false);
-
-  const toggleModal = (row?: TableHeader) => {
-    setSelectedRow(row || null);
-    setShowModal((prev) => !prev);
-  };
 
   const devicesPerPage = 4;
 
@@ -32,7 +24,7 @@ const Page = () => {
       const offset = pageIndex * devicesPerPage;
       const response = await getDevices(offset, devicesPerPage);
 
-      const transformedData: TableHeader[] = response.devices.map((device) => ({
+      const transformedData: TableData[] = response.devices.map((device) => ({
         id: device.id,
         phoneID: device.model,
         status: device.status === "active" ? "Active" : "Offline",
@@ -102,12 +94,7 @@ const Page = () => {
           {error ? (
             <p className="text-red-500">{error}</p>
           ) : (
-            <DataTable<TableHeader, unknown>
-              columns={columns(toggleModal)}
-              showModal={showModal}
-              setShowModal={setShowModal}
-              selectedRow={selectedRow}
-              toggleModal={toggleModal}
+            <DataTable<TableData, unknown>
               data={data}
               pageIndex={pageIndex}
               totalPages={Math.ceil(totalDevices / devicesPerPage)}
@@ -120,4 +107,4 @@ const Page = () => {
   );
 };
 
-export default withAuth(Page);
+export default Page;
