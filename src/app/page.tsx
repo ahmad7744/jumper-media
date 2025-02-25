@@ -141,7 +141,7 @@ const Page = () => {
 
             <div
               onClick={handleCopy}
-              className="flex items-center justify-center w-44 text-zinc-300 min-h-full border-l-[1px] py-4 px-3 border-[#323238] cursor-pointer"
+              className="flex items-center justify-center w-44 text-zinc-300 min-h-full border-l-[1px] py-4 px-6 border-[#323238] cursor-pointer"
             >
               {copied ? (
                 <>
@@ -167,7 +167,7 @@ const Page = () => {
             <h3 className="mb-4 text-zinc-200 text-md font-medium">
               How to Add a Device
             </h3>
-            <ul className="bg-[#FFFFFF0F] rounded-lg list-disc list-inside pl-5 py-7 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
+            <ul className="bg-[#FFFFFF0F] rounded-lg list-disc list-inside p-6 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
               <li>Copy the device key above</li>
               <li>Paste the key in the __ app</li>
               <li>Follow the remaining instructions in the app</li>
