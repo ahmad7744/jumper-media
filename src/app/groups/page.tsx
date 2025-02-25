@@ -160,10 +160,10 @@ const GroupPage = () => {
   };
 
   return (
-    <div className="w-full p-10 h-screen mx-auto">
-      <div className="w-full max-w-[1160px] mx-auto">
+    <div className="w-full py-10 px-4 lg:px-6 xl:px-8 2xl:px-10 h-screen mx-auto">
+      <div className="w-full mx-auto">
         <h1 className="text-neutral-50 Inter font-bold text-3xl">Groups</h1>
-        <div className="flex items-center py-5 justify-between max-w-[1160px]">
+        <div className="flex items-center py-5 justify-between    ">
           <InputField
             id="search"
             placeholder="Search Groups"
@@ -172,7 +172,7 @@ const GroupPage = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <div className="gap-3 flex">
+          <div className="gap-3 flex flex-wrap">
             <DropdownFilter
               title="Sort by"
               options={NameOptions}
@@ -206,7 +206,7 @@ const GroupPage = () => {
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-[1160px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 py-10">
+      <div className="mx-auto w-full  flex flex-wrap gap-4 py-10">
         {filteredGroups.length > 0 ? (
           filteredGroups.map((group, index) => (
             <GroupCard onPress={handleGroupClick} key={index} {...group} />

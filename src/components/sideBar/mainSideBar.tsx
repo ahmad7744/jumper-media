@@ -9,7 +9,7 @@ export default function SidebarWithState({ children }: { children: React.ReactNo
   const [selectedItem, setSelectedItem] = useState<string>("");
 
   const sidebarItems = [
-    { label: "Dashboard", icon: Assets.Dashboard, path: "/dashboard" },
+    { label: "Dashboard", icon: Assets.Dashboard, path: "/" },
     { label: "Locations", icon: Assets.Locations, path: "/locations" },
     { label: "Groups", icon: Assets.Groups, path: "/groups" },
     { label: "Settings", icon: Assets.Setting, path: "/settings" },
@@ -28,7 +28,7 @@ export default function SidebarWithState({ children }: { children: React.ReactNo
     }
   }, [pathname]);
 
-  if (pathname === "/auth/login" || pathname === "/" || pathname === "/auth/signup") {
+  if (pathname === "/login"  || pathname === "/auth/signup") {
     return children;
   }
 
@@ -44,8 +44,8 @@ export default function SidebarWithState({ children }: { children: React.ReactNo
       </div>
 
       {/* Main content area */}
-      <main className="flex-1 overflow-y-auto relative">
-        <div className="min-h-full mx-auto max-w-[1160px] relative">
+      <main className="flex-1 overflow-y-auto max-w-full relative">
+        <div className="min-h-full w-full relative">
           
           {children}
         </div>

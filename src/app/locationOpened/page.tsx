@@ -7,13 +7,13 @@ import Assets from "../../../public/assets/assets";
 import LocationCard from "@/components/locationCard/locationCard";
 import AreaChartComponent from "@/components/ChartComponent/ChartComponent";
 import { DataTable } from "@/components/mainTable/dataTable";
-import { columns, TableHeader } from "@/components/mainTable/columns";
+import { TableData } from "@/components/mainTable/columns";
 import StatusBadge from "@/components/StatusBadge/StatusBadge";
 import StatCard from "@/components/StatCard/StatCard";
 import LoadingIndicator from "@/components/LoadingIndicator/LoadingIndicator";
 
 const Page = () => {
-  const [data, setData] = useState<TableHeader[]>([]);
+  const [data, setData] = useState<TableData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pageIndex, setPageIndex] = useState<number>(0);
@@ -29,7 +29,7 @@ const Page = () => {
       const offset = pageIndex * devicesPerPage;
       const response = await getDevices(offset, devicesPerPage);
 
-      const transformedData: TableHeader[] = response.devices.map((device) => ({
+      const transformedData: TableData[] = response.devices.map((device) => ({
         id: device.id,
         phoneID: device.model,
         status: device.status === "active" ? "Active" : "Offline",
@@ -60,12 +60,12 @@ const Page = () => {
   };
 
   return (
-    <div className="Inter p-10 w-full max-w-[1160px] mx-auto">
+    <div className="Inter py-10 px-4 lg:px-6 xl:px-8 2xl:px-10 w-full  mx-auto">
       <h1 className="text-zinc-400 font-normal text-xs">
         Locations / <span className="text-zinc-200 font-medium">New York, NY</span>
       </h1>
 
-      <div className="items-center max-w-[1160px] mx-auto mt-7 pb-10">
+      <div className="items-center  mx-auto mt-7 pb-10">
         <div className="flex items-center gap-3">
           <p className="text-zinc-200 text-[28px] font-semibold">Las Vegas, CA</p>
           <StatusBadge status="Excellent" />
@@ -84,7 +84,7 @@ const Page = () => {
             percentageChange="20"
           />
 
-          <div className="flex items-center justify-between gap-4 max-w-[1160px] mt-4">
+          <div className="flex justify-between gap-4 mt-4">
             <LocationCard
               city="IP ADDRESS"
               devices={totalDevices}
@@ -100,7 +100,6 @@ const Page = () => {
             <p className="text-red-500">{error}</p>
           ) : (
             <DataTable
-              columns={columns(()=>{})}
               data={data}
               pageIndex={pageIndex}
               totalPages={Math.ceil(totalDevices / devicesPerPage)}

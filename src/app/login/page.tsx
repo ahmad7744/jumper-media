@@ -5,10 +5,10 @@ import Header from "@/components/header/header";
 import TextInput from "@/components/textInput/TextInput";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import Assets from "../../../../public/assets/assets";
 import { loginUser } from "@/api/userServices";
 import { LoginPayload } from "@/api/types";
 import { Loader2 } from "lucide-react";
+import Cookies from "js-cookie"; 
 
 const Page: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -24,38 +24,41 @@ const Page: React.FC = () => {
         setError('');
         setEmailError('');
         setPasswordError('');
-
+      
         let hasError = false;
-
+      
         if (!email.trim()) {
-            setEmailError("Please enter your email");
-            hasError = true;
+          setEmailError("Please enter your email");
+          hasError = true;
         }
         if (!password.trim()) {
-            setPasswordError("Please enter your password");
-            hasError = true;
+          setPasswordError("Please enter your password");
+          hasError = true;
         }
-
+      
         if (hasError) return;
-
+      
         setLoading(true);
-
+      
         const payload: LoginPayload = { email, password };
-
+      
         try {
-            const response = await loginUser(payload);
-            localStorage.setItem("authToken", response.token);
-            setIsRedirecting(true);
-            router.push("/dashboard");
+          const response = await loginUser(payload);
+      
+          Cookies.set("authToken", response.token, { expires: 7, secure: true });
+      
+          setIsRedirecting(true);
+          router.push("/");
         } catch (err: any) {
-            setError(err.message || "Login failed. Please try again.");
+          setError(err.message || "Login failed. Please try again.");
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };
+      };
 
 
     return (
+        <div className="flex items-center justify-center mx-auto w-ful min-h-screen p-4">
         <div className="flex items-center justify-between mx-auto w-full max-w-[1440px] p-4">
             <div className="justify-center w-[50%] mx-auto items-center">
                 <Header heading="Welcome Back!" subheading="Enter your username and password to continue." />
@@ -85,9 +88,9 @@ const Page: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between mx-auto w-[424px] mt-3">
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 ">
                         <Checkbox className="border border-zinc-500" id="Remember" />
-                        <label htmlFor="Remember" className="text-sm text-zinc-500 Inter font-normal leading-none">
+                        <label htmlFor="Remember" className="text-sm text-zinc-500 Inter font-normal leading-none cursor-pointer select-none">
                             Remember me
                         </label>
                     </div>
@@ -102,6 +105,7 @@ const Page: React.FC = () => {
                         disabled={loading}
                     >
                         {(loading || isRedirecting) ? <Loader2 className="animate-spin w-5 h-5" /> : "Login"}
+
                     </Button>
 
                     {/* <p className="text-zinc-500 Inter font-normal text-center">Or</p>
@@ -122,9 +126,10 @@ const Page: React.FC = () => {
                 </div> */}
             </div>
 
-            <div>
+            <div className="">
                 <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/LoginImage.png" alt="Login" />
             </div>
+        </div>
         </div>
     );
 };

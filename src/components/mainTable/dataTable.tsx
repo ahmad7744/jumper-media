@@ -26,7 +26,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   Check,
   ChevronDown,
@@ -39,13 +39,11 @@ import Assets from "../../../public/assets/assets";
 import { Checkbox, CheckboxIndicator } from "@radix-ui/react-checkbox";
 import InputField from "../inputField/inputField";
 import DeviceSettingsModal from "../DeviceSettingModal/DeviceSettingsModal";
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  showModal?: boolean;
-  toggleModal?: () => void;
-  setShowModal?: Dispatch<SetStateAction<boolean>>;
-  selectedRow?: TData | null;
-  data: TData[];
+import { getColumns, TableData } from "./columns";
+
+
+interface DataTableProps {
+  data: TableData[];
   pageIndex: number;
   totalPages: number;
   onPageChange: (newPageIndex: number) => void;
@@ -55,16 +53,11 @@ export function DataTable<
   TData extends { status: string; locations: string[] },
   TValue
 >({
-  columns,
   data,
-  showModal,
-  setShowModal,
-  toggleModal,
-  selectedRow,
   pageIndex,
   totalPages,
   onPageChange,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -79,7 +72,13 @@ export function DataTable<
     []
   );
 
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<TableData | null>(null);
 
+  const toggleModal = (row?: TableData) => {
+    setSelectedRow(row || null);
+    setShowModal((prev) => !prev);
+  };
   const allLocations = React.useMemo(() => {
     const locations = data.flatMap((item) => item.locations);
     return ["All", ...Array.from(new Set(locations))];
@@ -101,6 +100,8 @@ export function DataTable<
 
     return filtered;
   }, [filterStatus, selectedLocations, data]);
+
+  const columns = getColumns(toggleModal);
 
   const table = useReactTable({
     data: filteredData,
@@ -167,11 +168,12 @@ export function DataTable<
       login: "proxyadmin",
       password: "SecurePass987",
     },
+    
   ];
 
   return (
     <div>
-      <div className="flex items-center py-5  justify-between max-w-[1360px]">
+      <div className="flex flex-wrap gap-2 items-center py-5  justify-between">
         <InputField
           id="search"
           placeholder="Search Phones"
@@ -182,7 +184,7 @@ export function DataTable<
             table.getColumn("phoneID")?.setFilterValue(event.target.value)
           }
         />
-        <div className="gap-3 flex">
+        <div className="gap-3 flex flex-wrap">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -346,12 +348,12 @@ export function DataTable<
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between pb-10 mt-6 max-w-[1360px]">
+      <div className="flex items-center justify-between pb-10 mt-6 ">
         <div className="flex text-sm text-muted-foreground Inter text-neutral-400 font-medium">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex flex-wrap gap-2 items-center">
           {/* Previous Button */}
           <Button
             variant="outline"

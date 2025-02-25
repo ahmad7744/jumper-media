@@ -7,7 +7,7 @@ import { DataTable } from "@/components/mainTable/dataTable";
 import { useEffect, useState } from "react";
 import Assets from "../../../public/assets/assets";
 import LoadingIndicator from "@/components/LoadingIndicator/LoadingIndicator";
-
+import withAuth from "@/hooks/withAuth";
 const Page = () => {
   const [data, setData] = useState<TableHeader[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -120,4 +120,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Page);

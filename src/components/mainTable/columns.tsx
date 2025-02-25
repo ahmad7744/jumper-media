@@ -6,7 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { RefreshCw, Settings } from "lucide-react";
 import Assets from "../../../public/assets/assets";
 
-export type TableHeader = {
+export type TableData = {
   id: string;
   phoneID: string;
   status: string;
@@ -16,9 +16,9 @@ export type TableHeader = {
   locations: string[];
 };
 
-export const columns = (
-  toggleModal: (row: TableHeader) => void
-): ColumnDef<TableHeader>[] => [
+export const getColumns = (
+  toggleModal: (row: TableData) => void
+): ColumnDef<TableData>[] => [
   {
     id: "select",
     header: ({ table }) => (

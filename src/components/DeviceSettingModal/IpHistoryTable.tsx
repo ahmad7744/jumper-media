@@ -15,7 +15,7 @@ type IpHistoryTableProps = {
 
 const IpHistoryTable: React.FC<IpHistoryTableProps> = ({ history }) => {
   return (
-    <div className="custom-scrollbar rounded-lg border bg-zinc-800 border-[#323238] overflow-y-auto max-h-[300px]">
+    <div className="custom-scrollbar rounded-lg border bg-zinc-800 border-[#323238] overflow-y-auto max-h-[calc(100vh-400px)]">
       <Table>
         <TableHeader>
           <TableRow className="border-neutral-800 border">

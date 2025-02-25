@@ -1,10 +1,10 @@
-// layout.tsx
-import type { Metadata } from "next";
+"use client";
+
 import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { usePathname } from "next/navigation";
 import "./globals.css";
 import SidebarWithState from "@/components/sideBar/mainSideBar";
 
-// Google Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,29 +16,19 @@ const geistMono = Geist_Mono({
 });
 
 const Inter_font = Inter({
-  subsets: ['latin'],
+  subsets: ["latin"],
   weight: ["100", "300", "400", "500", "600", "700", "900"],
-  variable: '--font-inter'
+  variable: "--font-inter",
 });
 
-// Server-side metadata (no use client directive needed)
-export const metadata: Metadata = {
-  title: "Jumper Media",
-  description: "Jumper Media IP-DashBoard",
-};
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const publicRoutes = ["/login", "/signup"];
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
   return (
     <html>
       <body className={`${geistSans.variable} ${geistMono.variable} ${Inter_font.variable} antialiased`}>
-        <div>
-        
-          <SidebarWithState>{children}</SidebarWithState>
-        </div>
+        {publicRoutes.includes(pathname) ? children : <SidebarWithState>{children}</SidebarWithState>}
       </body>
     </html>
   );

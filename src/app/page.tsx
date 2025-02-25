@@ -1,135 +1,110 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import Header from "@/components/header/header";
-import TextInput from "@/components/textInput/TextInput";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { loginUser } from "@/api/userServices";
-import { LoginPayload } from "@/api/types";
+
+import { getDevices } from "@/api/userServices";
+import MetricCard from "@/components/Card/Card";
+import {  TableData } from "@/components/mainTable/columns";
+import { DataTable } from "@/components/mainTable/dataTable";
+import { useEffect, useState } from "react";
 import Assets from "../../public/assets/assets";
-import { Loader2 } from "lucide-react";
+import LoadingIndicator from "@/components/LoadingIndicator/LoadingIndicator";
+const Page = () => {
+  const [data, setData] = useState<TableData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [totalDevices, setTotalDevices] = useState<number>(0);
+  const [activeDevices, setActiveDevices] = useState<number>(0);
+  const [inactiveDevices, setInactiveDevices] = useState<number>(0);
 
-const Page: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [isRedirecting, setIsRedirecting] = useState(false);
+  const devicesPerPage = 4;
 
-    const router = useRouter();
+  const fetchDevices = async (pageIndex: number) => {
+    try {
+      setLoading(true);
+      const offset = pageIndex * devicesPerPage;
+      const response = await getDevices(offset, devicesPerPage);
 
-    const handleLogin = async () => {
-        setError('');
-        setEmailError('');
-        setPasswordError('');
+      const transformedData: TableData[] = response.devices.map((device) => ({
+        id: device.id,
+        phoneID: device.model,
+        status: device.status === "active" ? "Active" : "Offline",
+        name: device.name,
+        IPAddress: device.ip_address,
+        LastActivity: device.updated_at,
+        locations: Array.isArray(device.city) ? device.city : [device.city],
+      }));
 
-        let hasError = false;
+      setData(transformedData);
+      setTotalDevices(response.total);
+      setActiveDevices(response.active);
+      setInactiveDevices(response.inactive);
+    } catch (err: any) {
+      console.error("Error fetching devices:", err.message);
+      setError("Failed to fetch devices");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        if (!email.trim()) {
-            setEmailError("Please enter your email");
-            hasError = true;
-        }
-        if (!password.trim()) {
-            setPasswordError("Please enter your password");
-            hasError = true;
-        }
+  useEffect(() => {
+    fetchDevices(pageIndex);
+  }, [pageIndex]);
 
-        if (hasError) return;
+  const handlePageChange = (newPageIndex: number) => {
+    setPageIndex(newPageIndex);
+  };
 
-        setLoading(true);
+  return (
+    <div className="max-w-full h-screen flex justify-center items-center ">
+      {loading ? (
 
-        const payload: LoginPayload = { email, password };
+        <LoadingIndicator message="Loading Devices..." />
 
-        try {
-            const response = await loginUser(payload);
-            localStorage.setItem("authToken", response.token);
-            setIsRedirecting(true);
-            router.push("/dashboard");
-        } catch (err: any) {
-            setError(err.message || "Login failed. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
+      ) : (
+        <div className="py-10 px-4 lg:px-6 xl:px-8 2xl:px-10 w-full h-full max-w-full mx-auto">
+          <h1 className="text-neutral-50 Inter font-bold text-3xl">
+            Dashboard
+          </h1>
+          <div className="flex flex-wrap justify-between gap-6  xl:gap-12 mt-4 ">
+            <MetricCard
+              valuePercent="+20% from last month"
+              title="Total Phones"
+              value={totalDevices.toString()}
+              icon={Assets.MobileIcon}
+              className="border border-gray-700 flex-1"
+            />
+            <MetricCard
+              title="Active Phones"
+              value={activeDevices.toString()}
+              valuePercent="+20% from last month"
+              icon={Assets.OnlineIcon}
+              className="border border-gray-700 flex-1"
+            />
+            <MetricCard
+              title="Offline Phones"
+              value={inactiveDevices.toString()}
+              valuePercent="+20% from last month"
+              icon={Assets.OfflineIcon}
+              className="border border-gray-700 flex-1"
+            />
+          </div>
 
-    return (
-        <div className="flex items-center justify-center mx-auto w-ful min-h-screen p-4">
-        <div className="flex items-center justify-between mx-auto w-full max-w-[1440px] p-4">
-            <div className="justify-center w-[50%] mx-auto items-center">
-                <Header heading="Welcome Back!" subheading="Enter your username and password to continue." />
+          <p className="text-zinc-200 mt-10 Inter text-xl">All Phones</p>
 
-                <div className="w-[424px] justify-center mx-auto mt-3">
-                    {/* Email Input */}
-                    <TextInput
-                        label="Email"
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
-
-                    {/* Password Input */}
-                    <TextInput
-                        label="Password"
-                        type="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        isPasswordField={true}
-                    />
-                    {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
-                    {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-                </div>
-
-                <div className="flex items-center justify-between mx-auto w-[424px] mt-3">
-                    <div className="flex items-center space-x-2">
-                        <Checkbox className="border border-zinc-500" id="Remember" />
-                        <label htmlFor="Remember" className="text-sm text-zinc-500 Inter font-normal leading-none">
-                            Remember me
-                        </label>
-                    </div>
-                    <p className="text-zinc-300 text-sm Inter font-medium cursor-pointer">Forgot Password?</p>
-                </div>
-
-                <div className="w-[424px] flex flex-col gap-5 justify-center mx-auto mt-5">
-                    <Button
-                        onClick={handleLogin}
-                        variant={"secondary"}
-                        className="bg-blue-700 w-[424px] py-6 hover:bg-zinc-400 hover:text-zinc-900 text-zinc-200 Inter"
-                        disabled={loading}
-                    >
-                        {(loading || isRedirecting) ? <Loader2 className="animate-spin w-5 h-5" /> : "Login"}
-
-                    </Button>
-
-                    {/* <p className="text-zinc-500 Inter font-normal text-center">Or</p>
-
-                    <Button
-                        variant={"outline"}
-                        className="bg-zinc-900 w-[424px] py-6 border border-zinc-800 hover:bg-zinc-200 hover:text-zinc-900 text-zinc-200 Inter"
-                    >
-                        <div dangerouslySetInnerHTML={{ __html: Assets.Google }} />
-                        Sign up with Google
-                    </Button> */}
-                </div>
-
-                {/* <div onClick={() => router.push("/auth/signup")}>
-                    <p className="text-center text-zinc-400 text-sm Inter mt-8">
-                        Don’t have an account? <span className="text-zinc-200 text-sm Inter font-medium cursor-pointer">Sign Up</span>
-                    </p>
-                </div> */}
-            </div>
-
-            <div className="">
-                <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/LoginImage.png" alt="Login" />
-            </div>
+          {error ? (
+            <p className="text-red-500">{error}</p>
+          ) : (
+            <DataTable<TableData, unknown>
+              data={data}
+              pageIndex={pageIndex}
+              totalPages={Math.ceil(totalDevices / devicesPerPage)}
+              onPageChange={handlePageChange}
+            />
+          )}
         </div>
-        </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default Page;
