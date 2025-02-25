@@ -20,7 +20,7 @@ const Page = () => {
   const [activeDevices, setActiveDevices] = useState<number>(0);
   const [inactiveDevices, setInactiveDevices] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [deviceKey] = useState<string>("kjsfhdsjehfgieuorjoi10924380130"); 
+  const [deviceKey] = useState<string>("kjsfhdsjehfgieuorjoi10924380130");
   const [copied, setCopied] = useState<boolean>(false);
   const devicesPerPage = 4;
 
@@ -67,7 +67,7 @@ const Page = () => {
   const handleCopy = () => {
     navigator.clipboard.writeText(deviceKey).then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000); 
+      setTimeout(() => setCopied(false), 2000);
     });
   };
 
@@ -107,13 +107,13 @@ const Page = () => {
           <div className="flex justify-between items-center mt-10">
             <p className="text-zinc-200 Inter text-xl">All Phones</p>
             <Button
-            variant="outline"
-            className="border border-none bg-blue-700 border-neutral-800 text-zinc-300 Inter hover:text-zinc-900 hover:bg-white"
-            size="sm"
-            onClick={toggleModal} 
-          >
-            <Plus /> Add Device
-          </Button>
+              variant="outline"
+              className="border border-none bg-blue-700 border-neutral-800 text-zinc-300 Inter hover:text-zinc-900 hover:bg-white"
+              size="sm"
+              onClick={toggleModal}
+            >
+              <Plus /> Add Device
+            </Button>
           </div>
 
           {error ? (
@@ -129,42 +129,48 @@ const Page = () => {
         </div>
       )}
 
-{isModalOpen && (
-  <Modal onClose={toggleModal} title="Add Device">
-      <h3 className="mb-2 text-zinc-200 text-lg font-medium">Device Key</h3>
+      {isModalOpen && (
+        <Modal onClose={toggleModal} title="Add Device">
+          <h3 className="mb-2 text-zinc-200 text-lg font-medium">Device Key</h3>
 
-    <div className="flex items-center space-x-2 bg-zinc-800 rounded-md px-3 text-sm border-[1px] border-[#FFFFFF0F]" >
-      <div className="w-full bg-zinc-800 text-zinc-300 rounded-md px-2 py-2 text-sm">
-        {deviceKey}
-      </div>
+          <div className="flex items-center space-x-2 bg-zinc-800 rounded-md px-3 text-sm border-[1px] border-[#FFFFFF0F]">
+            <div className="w-full bg-zinc-800 text-zinc-300 rounded-md px-2 py-2 text-sm">
+              {deviceKey}
+            </div>
 
-      <div
-        onClick={handleCopy}
-        className="flex items-center w-28 text-zinc-300 min-h-full border-l-[1px] py-2 pl-2 border-[#323238] cursor-pointer"
-      >
-        {copied ? (
-          <>
-            <ClipboardCheck className="mr-2 hover:text-zinc-200" size={20}/><span className="text-xs text-zinc-300"> Copied!</span>
-          </>
-        ) : (
-          <>
-            <Clipboard className="mr-2  hover:text-zinc-200" size={20}/> <span className="text-xs text-zinc-300 flex-1">Copy Key</span>
-          </>
-        )}
-      </div>
-    </div>
+            <div
+              onClick={handleCopy}
+              className="flex items-center w-28 text-zinc-300 min-h-full border-l-[1px] py-2 pl-2 border-[#323238] cursor-pointer"
+            >
+              {copied ? (
+                <>
+                  <ClipboardCheck
+                    className="mr-2 hover:text-zinc-200"
+                    size={20}
+                  />
+                  <span className="text-xs text-zinc-300"> Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Clipboard className="mr-2  hover:text-zinc-200" size={20} />{" "}
+                  <span className="text-xs text-zinc-300 flex-1">Copy Key</span>
+                </>
+              )}
+            </div>
+          </div>
 
-    <div className="text-gray-300 mt-4">
-      <h3 className="mb-2 text-zinc-200 text-lg font-medium">How to Add a Device</h3>
-      <ul className="bg-zinc-800 rounded-md list-disc list-inside pl-5 py-6 text-zinc-300 text-sm space-y-2 border-[1px] border-[#FFFFFF0F]">
-        <li>Copy the device key above</li>
-        <li>Paste the key in the appropriate app</li>
-        <li>Follow the remaining instructions in the app</li>
-      </ul>
-    </div>
-  </Modal>
-)}
-
+          <div className="text-gray-300 mt-4">
+            <h3 className="mb-2 text-zinc-200 text-lg font-medium">
+              How to Add a Device
+            </h3>
+            <ul className="bg-zinc-800 rounded-md list-disc list-inside pl-5 py-6 text-zinc-300 text-sm space-y-2 border-[1px] border-[#FFFFFF0F]">
+              <li>Copy the device key above</li>
+              <li>Paste the key in the appropriate app</li>
+              <li>Follow the remaining instructions in the app</li>
+            </ul>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
