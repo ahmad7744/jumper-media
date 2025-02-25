@@ -163,7 +163,7 @@ const Page = () => {
             <h3 className="mb-2 text-zinc-200 text-md font-medium">
               How to Add a Device
             </h3>
-            <ul className="bg-zinc-800 rounded-lg list-disc list-inside pl-5 py-7 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
+            <ul className="bg-[#FFFFFF0F] rounded-lg list-disc list-inside pl-5 py-7 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
               <li>Copy the device key above</li>
               <li>Paste the key in the __ app</li>
               <li>Follow the remaining instructions in the app</li>
