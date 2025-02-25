@@ -145,7 +145,7 @@ const Page = () => {
             >
               {copied ? (
                 <>
-                  <CopyCheck className="mr-2 hover:text-zinc-200" size={20} />
+                  <CopyCheck className="mr-2 hover:text-zinc-200" size={22} />
                   <span className="text-xs text-zinc-300"> Copied!</span>
                 </>
               ) : (
@@ -164,8 +164,8 @@ const Page = () => {
           </div>
 
           <div className="text-gray-300 mt-8">
-            <h3 className="mb-4 text-zinc-200 text-md font-medium">
-              How to Add a Device
+            <h3 className="mb-4 text-zinc-200 text-sm font-medium">
+              HOW TO ADD A DEVICE
             </h3>
             <ul className="bg-[#FFFFFF0F] rounded-lg list-disc list-inside p-6 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
               <li>Copy the device key above</li>
