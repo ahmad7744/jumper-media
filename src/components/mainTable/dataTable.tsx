@@ -40,7 +40,9 @@ import { Checkbox, CheckboxIndicator } from "@radix-ui/react-checkbox";
 import InputField from "../inputField/inputField";
 import DeviceSettingsModal from "../DeviceSettingModal/DeviceSettingsModal";
 import { getColumns, TableData } from "./columns";
-
+import DeviceCard from "../DeviceCard/DeviceCard";
+import DeviceCardsContainer from "../DeviceCard/DeviceCardsContainer";
+import { useIsTablet } from "@/hooks/use-tablet";
 
 interface DataTableProps {
   data: TableData[];
@@ -52,28 +54,33 @@ interface DataTableProps {
 export function DataTable<
   TData extends { status: string; locations: string[] },
   TValue
->({
-  data,
-  pageIndex,
-  totalPages,
-  onPageChange,
-}: DataTableProps) {
+>({ data, pageIndex, totalPages, onPageChange }: DataTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState<
+    Record<string, boolean>
+  >({});
   const [filterStatus, setFilterStatus] = React.useState<
     "All" | "Active" | "Offline"
   >("All");
   const [selectedLocations, setSelectedLocations] = React.useState<string[]>(
     []
   );
-
+  const [showTable, setShowTable] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState<TableData | null>(null);
+
+  const isTablet = useIsTablet();
+
+  React.useEffect(() => {
+    if (!isTablet) {
+      setShowTable(true);
+    }
+  }, [isTablet]);
 
   const toggleModal = (row?: TableData) => {
     setSelectedRow(row || null);
@@ -106,6 +113,7 @@ export function DataTable<
   const table = useReactTable({
     data: filteredData,
     columns,
+    getRowId: (row) => row.id,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -168,28 +176,31 @@ export function DataTable<
       login: "proxyadmin",
       password: "SecurePass987",
     },
-    
   ];
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 items-center py-5  justify-between">
-        <InputField
-          id="search"
-          placeholder="Search Phones"
-          icon={true}
-          size="small"
-          value={(table.getColumn("phoneID")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("phoneID")?.setFilterValue(event.target.value)
-          }
-        />
+      <div className="flex flex-wrap gap-2 items-center py-5 justify-between">
+        <div className="lg:w-96">
+          <InputField
+            id="search"
+            placeholder="Search Phones"
+            icon={true}
+            size={isTablet ? "small" : "large"}
+            value={
+              (table.getColumn("phoneID")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("phoneID")?.setFilterValue(event.target.value)
+            }
+          />
+        </div>
         <div className="gap-3 flex flex-wrap">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="ml-auto bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
+                className=" bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
                 size="sm"
               >
                 Locations:{" "}
@@ -250,7 +261,7 @@ export function DataTable<
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="ml-auto bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
+                className=" bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
                 size={"sm"}
               >
                 Status: {filterStatus} <ChevronDown />
@@ -286,118 +297,147 @@ export function DataTable<
             <div dangerouslySetInnerHTML={{ __html: Assets.BulkRotate }} />
             Bulk Rotate IP
           </Button>
-        </div>
-      </div>
-      <div className="rounded-md border border-neutral-800">
-        <Table>
-          <TableHeader className="border-neutral-950 border">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                className="border-neutral-800 border"
-                key={headerGroup.id}
-              >
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      className="text-neutral-400 text-[10px] Inter font-medium"
-                      key={header.id}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  className={"border border-none"}
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      className="text-neutral-50 Inter font-medium text-[10px]"
-                      key={cell.id}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <div className="flex items-center justify-between pb-10 mt-6 ">
-        <div className="flex text-sm text-muted-foreground Inter text-neutral-400 font-medium">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="flex flex-wrap gap-2 items-center">
-          {/* Previous Button */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onPageChange(pageIndex - 1)}
-            disabled={pageIndex === 0}
-            className="bg-transparent text-neutral-400 font-medium border-neutral-800 border-[1px] rounded-md px-4 py-[6px]"
-          >
-            <ChevronLeft />
-          </Button>
-
-          {/* Page Numbers */}
-          {Array.from({ length: totalPages }, (_, index) => (
-            <Button
-              variant="outline"
-              size="sm"
-              key={index}
-              onClick={() => onPageChange(index)}
-              className={`rounded-md px-4 py-[6px] font-medium text-sm ${
-                pageIndex === index
-                  ? "gradient border hover:text-zinc-300 border-[#1F1F21] text-zinc-300"
-                  : "bg-transparent border border-[#1F1F21] text-neutral-400"
-              }`}
+          <div className="lg:hidden flex items-center gap-2">
+            <Checkbox
+              checked={!showTable}
+              onCheckedChange={() => setShowTable((prev) => !prev)}
+              id={"showTable"}
+              className="border border-zinc-500 w-4 h-4 rounded-sm data-[state=checked]:bg-zinc-300 data-[state=checked]:border-zinc-300"
             >
-              {index + 1}
-            </Button>
-          ))}
-
-          {/* Next Button */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onPageChange(pageIndex + 1)}
-            disabled={pageIndex === totalPages - 1}
-            className="bg-transparent text-neutral-400 font-medium border-neutral-800 border-[1px] rounded-md px-4 py-[6px]"
-          >
-            <ChevronRight />
-          </Button>
+              <CheckboxIndicator className="text-zinc-950">
+                <Check className="w-4 h-4" />
+              </CheckboxIndicator>
+            </Checkbox>
+            <label
+              className="text-sm text-neutral-200 cursor-pointer select-none"
+              htmlFor="showTable"
+            >
+              Show Cards
+            </label>
+          </div>
         </div>
       </div>
+      {showTable ? (
+        <>
+          <div className="rounded-md border border-neutral-800">
+            <Table>
+              <TableHeader className="border-neutral-950 border">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow
+                    className="border-neutral-800 border"
+                    key={headerGroup.id}
+                  >
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead
+                          className="text-neutral-400 text-[10px] Inter font-medium"
+                          key={header.id}
+                        >
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      className={"border border-none"}
+                      key={row.id}
+                      data-state={rowSelection[row.id] && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell
+                          className="text-neutral-50 Inter font-medium text-[10px]"
+                          key={cell.id}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="flex items-center justify-between pb-10 mt-6 ">
+            <div className="flex text-sm text-muted-foreground Inter text-neutral-400 font-medium">
+              {table.getFilteredSelectedRowModel().rows.length} of{" "}
+              {table.getFilteredRowModel().rows.length} row(s) selected.
+            </div>
+            <div className="flex flex-wrap gap-2 items-center">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onPageChange(pageIndex - 1)}
+                disabled={pageIndex === 0}
+                className="bg-transparent text-neutral-400 font-medium border-neutral-800 border-[1px] rounded-md px-4 py-[6px]"
+              >
+                <ChevronLeft />
+              </Button>
+
+              {Array.from({ length: totalPages }, (_, index) => (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  key={index}
+                  onClick={() => onPageChange(index)}
+                  className={`rounded-md px-4 py-[6px] font-medium text-sm ${
+                    pageIndex === index
+                      ? "gradient border hover:text-zinc-300 border-[#1F1F21] text-zinc-300"
+                      : "bg-transparent border border-[#1F1F21] text-neutral-400"
+                  }`}
+                >
+                  {index + 1}
+                </Button>
+              ))}
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onPageChange(pageIndex + 1)}
+                disabled={pageIndex === totalPages - 1}
+                className="bg-transparent text-neutral-400 font-medium border-neutral-800 border-[1px] rounded-md px-4 py-[6px]"
+              >
+                <ChevronRight />
+              </Button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-wrap gap-4">
+          <DeviceCardsContainer
+            data={filteredData}
+            rowSelection={rowSelection}
+            setRowSelection={setRowSelection}
+          />
+        </div>
+      )}
 
       {showModal && selectedRow && (
-       <DeviceSettingsModal onClose={() => toggleModal?.()} proxyData={proxyData} />
-
+        <DeviceSettingsModal
+          onClose={() => toggleModal?.()}
+          proxyData={proxyData}
+        />
       )}
     </div>
   );

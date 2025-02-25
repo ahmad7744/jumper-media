@@ -42,7 +42,7 @@ const InputField: React.FC<InputFieldProps> = ({
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
-                    className={`w-full placeholder:text-zinc-300 text-zinc-300 border border-zinc-800  rounded-[8px] ${backgroundColor === 'light' ? 'bg-zinc-800' : 'bg-zinc-800'} ${size === 'small' ? 'pl-8 bg-zinc-800' : 'pl-4  '} `}
+                    className={`w-full placeholder:text-zinc-300 text-zinc-300 border border-zinc-800  rounded-[8px] ${backgroundColor === 'light' ? 'bg-zinc-800' : 'bg-zinc-800'} ${size === 'small' ? 'pl-8 bg-zinc-800' : 'pl-8  '} `}
                 />
 
             </div>
