@@ -10,6 +10,7 @@ import LoadingIndicator from "@/components/LoadingIndicator/LoadingIndicator";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ModalComponent/ModalComponent";
 import { CopyCheck, CopyIcon, Plus } from "lucide-react";
+import Image from "next/image";
 
 const Page = () => {
   const [data, setData] = useState<TableData[]>([]);
@@ -131,7 +132,7 @@ const Page = () => {
 
       {isModalOpen && (
         <Modal onClose={toggleModal} title="Add New Device">
-          <h3 className="mb-2 text-zinc-200 text-lg font-medium">Device Key</h3>
+          <h3 className="mb-4 text-zinc-200 text-lg font-medium">Device Key</h3>
 
           <div className="flex items-center space-x-2 bg-zinc-800 rounded-lg  text-sm border-[1px] border-[#FFFFFF0F]">
             <div className="w-full bg-zinc-800 text-zinc-300 rounded-md px-6 py-4 text-sm">
@@ -144,15 +145,18 @@ const Page = () => {
             >
               {copied ? (
                 <>
-                  <CopyCheck
-                    className="mr-2 hover:text-zinc-200"
-                    size={20}
-                  />
+                  <CopyCheck className="mr-2 hover:text-zinc-200" size={20} />
                   <span className="text-xs text-zinc-300"> Copied!</span>
                 </>
               ) : (
                 <>
-                  <CopyIcon className="mr-2  hover:text-zinc-200" size={20} />{" "}
+                  <Image
+                    src={"/copy.svg"}
+                    alt="Copy key"
+                    width={22}
+                    height={22}
+                    className="mr-2"
+                  />
                   <span className="text-xs text-zinc-300 ">Copy Key</span>
                 </>
               )}
@@ -160,7 +164,7 @@ const Page = () => {
           </div>
 
           <div className="text-gray-300 mt-8">
-            <h3 className="mb-2 text-zinc-200 text-md font-medium">
+            <h3 className="mb-4 text-zinc-200 text-md font-medium">
               How to Add a Device
             </h3>
             <ul className="bg-[#FFFFFF0F] rounded-lg list-disc list-inside pl-5 py-7 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
