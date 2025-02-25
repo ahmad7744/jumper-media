@@ -84,20 +84,20 @@ const Page = () => {
           <div className="flex flex-wrap justify-between gap-6 xl:gap-12 mt-4">
             <MetricCard
               valuePercent="+20% from last month"
-              title="Total Phones"
+              title="TOTAL PHONES"
               value={totalDevices.toString()}
               icon={Assets.MobileIcon}
               className="border lg:border-gray-700 flex-1"
             />
             <MetricCard
-              title="Active Phones"
+              title="ACTIVE PHONES"
               value={activeDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OnlineIcon}
               className="border lg:border-gray-700 flex-1"
             />
             <MetricCard
-              title="Offline Phones"
+              title="OFFLINE PHONES"
               value={inactiveDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OfflineIcon}
