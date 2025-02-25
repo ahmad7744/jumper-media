@@ -46,7 +46,7 @@ const Page: React.FC = () => {
           const response = await loginUser(payload);
       
           Cookies.set("authToken", response.token, { expires: 7, secure: true });
-      
+          localStorage.setItem("authToken", response.token);
           setIsRedirecting(true);
           router.push("/");
         } catch (err: any) {
