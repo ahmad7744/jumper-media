@@ -61,7 +61,7 @@ const AreaChartComponent: React.FC<AreaChartProps> = ({
     description = "Showing total visitors for the last 6 months",
 }) => {
     return (
-        <div className="w-full max-w-[726px] xl:max-w-[1012px] 2xl:max-w-[1412px] bg-zinc-900 rounded-[8px] p-6 Inter flex flex-col justify-between">
+        <div className="w-full max-w-[726px] xl:max-w-[1012px] 2xl:max-w-[1612px] bg-zinc-900 rounded-[8px] p-6 Inter flex flex-col justify-between">
 
             <div className="flex justify-between">
                 <p className="text-zinc-200 text-xs font-medium">{title}</p>

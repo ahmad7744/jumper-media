@@ -45,9 +45,9 @@ export function AddedProxysTable({ data, onAddProxy }: AddedProxysTableProps) {
 
   return (
     <div>
-      <div className="flex justify-between items-center">
+      <div className="flex flex-wrap justify-between items-center mb-2">
         <p className="text-zinc-200 mb-2 Inter text-md">Added Proxys</p>
-        <div className="flex items-center py-4 gap-2">
+        <div className="flex flex-wrap items-center py-2 lg:py-4 gap-2">
           <Button
             variant="default"
             className="bg-transparent border Inter font-medium border-none hover:bg-white hover:text-zinc-900"

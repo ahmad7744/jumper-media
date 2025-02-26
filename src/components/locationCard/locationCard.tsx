@@ -32,7 +32,7 @@ const LocationCard: React.FC<LocationCardProps> = ({
     const sizeClasses = size === 'large' ? 'text-2xl font-semibold ' : 'text-xs font-medium ';
 
     return (
-        <div onClick={onPress} className='items-center cursor-pointer w-full max-w-72 xl:max-w-96 Inter  bg-zinc-900 border border-[#FFFFFF0F] rounded-[8px] '>
+        <div onClick={onPress} className='items-center cursor-pointer w-full max-w-72 xl:max-w-96 2xl:max-w-[550px] Inter  bg-zinc-900 border border-[#FFFFFF0F] rounded-[8px] '>
             <div className='p-6'>
                 <div className='flex items-baseline justify-between'>
                     <div className='flex flex-col'>

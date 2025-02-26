@@ -37,13 +37,13 @@ const ChangeIp = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <div className="flex justify-between items-center mb-2">
-          <p className="text-white text-sm font-medium">URL for IP Address Change</p>
+        <div className="flex flex-wrap justify-between gap-2 items-center mt-2 mb-4">
+          <p className="text-white text-sm font-medium mb-2">URL for IP Address Change</p>
           <Button
             variant="outline"
-            className="bg-blue-700 border-none text-white hover:text-zinc-700"
+            className="bg-blue-700 border-none text-white hover:text-zinc-700 "
             size="sm"
             onClick={addNewUrl}
           >

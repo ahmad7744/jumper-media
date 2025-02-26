@@ -41,7 +41,7 @@ const Select: React.FC<SelectProps> = ({
       </button>
 
       {isOpen && (
-        <div className="absolute mt-1 w-80 bg-zinc-800 border border-zinc-700 rounded-md shadow-lg z-10">
+        <div className="absolute mt-1 w-56 md:w-80 bg-zinc-800 border border-zinc-700 rounded-md shadow-lg z-10">
           {options.map((option) => (
             <button
               key={option.value}
