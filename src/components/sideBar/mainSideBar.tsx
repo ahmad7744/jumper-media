@@ -108,7 +108,7 @@ export default function SidebarWithState({
         className={`flex-1 overflow-y-auto max-w-full relative ${
           !isSidebarOpen ? "w-full" : "blur-sm flex-shrink-0 lg:blur-none"
         }`}
-        onClick={toggleSidebar}
+        onClick={()=>{isSidebarOpen ?  setIsSidebarOpen(false) : null}}
       >
         <div className="min-h-full w-full relative">{children}</div>
       </main>
