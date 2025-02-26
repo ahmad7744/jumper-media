@@ -76,7 +76,7 @@ export const getColumns = (
   {
     accessorKey: "locations",
     header: "LOCATIONS",
-    cell: ({ row }) => row.original.locations.join(", "),
+    cell: ({ row }) => row.original.locations?.join(", "),
   },
   {
     accessorKey: "LastActivity",

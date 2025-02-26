@@ -25,13 +25,12 @@ const MetricCard: React.FC<MetricCardProps> = ({ title, value, icon, className, 
                     </div>
 
                 )}
-                <CardTitle className="text-sm lg:text-sm xl:text-xl flex-1 Inter font-medium text-zinc-200 ">{title}</CardTitle>
+                <CardTitle className="text-xs 2xl:text-xl flex-1 Inter font-medium text-zinc-200 ">{title}</CardTitle>
 
             </CardHeader>
             <CardContent>
-                <p className="text-xl lg:text-3xl xl:text-4xl Inter font-bold text-zinc-200">{value}</p>
-                <p className="text-xs lg:text-sm xl:text-base Inter font-normal text-zinc-400 mt-2">{valuePercent}</p>
-
+                <p className="text-xl lg:text-2xl 2xl:text-4xl Inter font-bold text-zinc-200">{value}</p>
+                <p className="text-xs  2xl:text-base Inter font-normal text-zinc-400 mt-2">{valuePercent}</p>
 
             </CardContent>
         </Card>
