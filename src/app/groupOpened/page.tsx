@@ -91,7 +91,7 @@ const Page = () => {
             percentageChange="20"
           />
 
-          <div className="flex justify-between gap-4 mt-4">
+          <div className="flex  justify-between gap-4 mt-4">
             <LocationCard
               city="IP ADDRESS"
               devices={totalDevices}

@@ -15,12 +15,18 @@ interface DeviceCardProps {
   toggleSelection: (id: string) => void;
 }
 
-const DeviceCard: React.FC<DeviceCardProps> = ({ device, isSelected, toggleSelection }) => {
+const DeviceCard: React.FC<DeviceCardProps> = ({
+  device,
+  isSelected,
+  toggleSelection,
+}) => {
   return (
-    <div className="bg-[#0A0A0A] border border-neutral-800 rounded-md p-4 w-full max-w-96 flex flex-col gap-2 relative">
+    <div className="bg-[#0A0A0A] border border-neutral-800 rounded-md p-4 w-full max-w-96 md:max-w-[360px] flex flex-col gap-2 relative">
       <div className="border-b border-neutral-800 pb-3">
         <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-neutral-100">{device.phoneID}</h2>
+          <h2 className="text-lg font-semibold text-neutral-100">
+            {device.phoneID}
+          </h2>
           <Checkbox
             className="w-4 h-4 border border-neutral-700"
             checked={isSelected}
@@ -33,7 +39,11 @@ const DeviceCard: React.FC<DeviceCardProps> = ({ device, isSelected, toggleSelec
       <div className="mt-3 flex justify-between items-center">
         <p className="text-neutral-400 text-xs">Status</p>
         <div className="flex items-center gap-1">
-          <span className={`w-2 h-2 rounded-full ${device.status === "Active" ? "bg-green-500" : "bg-red-500"}`} />
+          <span
+            className={`w-2 h-2 rounded-full ${
+              device.status === "Active" ? "bg-green-500" : "bg-red-500"
+            }`}
+          />
           <span className="text-sm text-neutral-200">{device.status}</span>
         </div>
       </div>

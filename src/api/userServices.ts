@@ -38,6 +38,25 @@ export const getDevices = async (offset: number = 0, limit: number = 4): Promise
 };
 
 
+export const searchDevices = async (name: string) => {
+    try {
+        const url = `${API_ENDPOINTS.SEARCH_DEVICES}?name=${name}`
+      const response = await apiClient<DevicesResponse>(url, {
+        method: "GET",
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDA2NDc5MTksImlhdCI6MTc0MDU2MTUxOSwicm9sZXMiOlsxXSwidXNlcklkIjoyfQ.rOx0yW5WhCF_oEmBBBOAhpoRhbjEegJP2eEK6C8SZXk'
+        }
+      });
+  
+      console.log("Devices Fetched:", response);
+      
+      return response.devices;
+    } catch (error: any) {
+        console.error("Error Fetching Devices:", error.message);
+        throw error;
+    }
+  };
+  
 export const getLocationStats = async (): Promise<LocationStatsResponse> => {
     try {
         const response = await apiClient<LocationStatsResponse>(API_ENDPOINTS.GET_LOCATIONS, {
