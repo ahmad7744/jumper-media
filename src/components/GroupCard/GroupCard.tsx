@@ -30,15 +30,15 @@ const GroupCard: React.FC<GroupCardProps> = ({
   return (
     <div
       onClick={onPress}
-      className="items-center cursor-pointer w-full max-w-72 xl:max-w-96 Inter bg-zinc-900 border border-[#FFFFFF0F] rounded-[8px]"
+      className="items-center cursor-pointer w-full max-w-72 xl:max-w-96 2xl:max-w-[550px] Inter bg-zinc-900 border border-[#FFFFFF0F] rounded-lg"
     >
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-5">
-            <p className="text-zinc-200 text-lg font-semibold">{title}</p>
+            <p className="text-zinc-200 text-lg xl:text-2xl font-semibold">{title}</p>
             {priorityLabel && (
               <div className="bg-zinc-800 px-2 py-[6px] rounded-full items-center">
-                <p className="text-xs text-zinc-300 font-semibold">
+                <p className="text-xs xl:text-sm text-zinc-300 font-semibold">
                   #{priorityLabel}
                 </p>
               </div>
@@ -49,7 +49,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
             dangerouslySetInnerHTML={{ __html: Assets.DotIcon }}
           />
         </div>
-        <p className="text-zinc-300 text-xs font-medium mt-2">
+        <p className="text-zinc-300 text-xs xl:text-sm font-medium mt-2">
           All Phones: {totalDevices}
         </p>
 
@@ -59,10 +59,10 @@ const GroupCard: React.FC<GroupCardProps> = ({
               className="text-green-400 bg-transparent"
               dangerouslySetInnerHTML={{ __html: Assets.OnlineIcon }}
             />
-            <p className="text-green-400 text-xs font-medium">Active Phones</p>
-            <p className="text-zinc-200 text-[22px] font-bold">
+            <p className="text-green-400 text-xs xl:text-sm font-medium">Active Phones</p>
+            <p className="text-zinc-200 text-lg xl:text-2xl font-bold">
               {activeDevices}{" "}
-              <span className="text-sm font-normal">({activePercentage}%)</span>
+              <span className="text-sm xl:text-sm font-normal">({activePercentage}%)</span>
             </p>
           </div>
           <div className="flex flex-col gap-1 mt-6">
@@ -70,10 +70,10 @@ const GroupCard: React.FC<GroupCardProps> = ({
               className="text-red-400 bg-transparent"
               dangerouslySetInnerHTML={{ __html: Assets.OfflineIcon }}
             />
-            <p className="text-red-400 text-xs font-medium">Inactive Phones</p>
-            <p className="text-zinc-200 text-[22px] font-bold">
+            <p className="text-red-400 text-xs xl:text-sm font-medium">Inactive Phones</p>
+            <p className="text-zinc-200 text-lg xl:text-2xl font-bold">
               {inactiveDevices}{" "}
-              <span className="text-sm font-normal">
+              <span className="text-sm xl:text-sm  font-normal">
                 ({inactivePercentage}%)
               </span>
             </p>

@@ -20,7 +20,7 @@ const Sidebar = ({
             <li key={index}>
               <Link href={item.path}>
                 <button
-                  className={`w-full flex items-center space-x-4 rounded-md px-2 py-2 transition ${
+                  className={`w-full flex items-center  space-x-4 rounded-md px-2 py-2 transition ${
                     selectedItem === item.label
                       ? "bg-zinc-800 text-zinc-200"
                       : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-200"
@@ -28,7 +28,7 @@ const Sidebar = ({
                   onClick={() => onItemClick(item.label)}
                 >
                   <div dangerouslySetInnerHTML={{ __html: item.icon }} />
-                  <span>{item.label}</span>
+                  <span className=" xl:text-lg xl:font-medium">{item.label}</span>
                 </button>
               </Link>
             </li>

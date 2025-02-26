@@ -81,40 +81,32 @@ const Page = () => {
           <h1 className="text-neutral-50 Inter font-bold text-3xl">
             Dashboard
           </h1>
-          <div className="flex flex-col md:flex-row flex-wrap justify-between gap-6 xl:gap-8 mt-4">
+          <div className="flex flex-col md:flex-row flex-wrap justify-between gap-4 xl:gap-8 mt-4">
             <MetricCard
               valuePercent="+20% from last month"
               title="TOTAL PHONES"
               value={totalDevices.toString()}
               icon={Assets.MobileIcon}
-              className="max-w-96 border lg:border-gray-700 md:flex-1"
+              className="border lg:border-gray-700 md:flex-1"
             />
             <MetricCard
               title="ACTIVE PHONES"
               value={activeDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OnlineIcon}
-              className="max-w-96 border lg:border-gray-700 flex-1"
+              className="border lg:border-gray-700 flex-1"
             />
             <MetricCard
               title="OFFLINE PHONES"
               value={inactiveDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OfflineIcon}
-              className="max-w-96 border lg:border-gray-700 flex-1"
+              className=" border lg:border-gray-700 flex-1"
             />
           </div>
 
           <div className="flex justify-between items-center mt-10">
-            <p className="text-zinc-200 Inter text-xl">All Phones</p>
-            <Button
-              variant="outline"
-              className="border border-none bg-blue-700 border-neutral-800 text-zinc-300 Inter hover:text-zinc-900 hover:bg-white"
-              size="sm"
-              onClick={toggleModal}
-            >
-              <Plus /> Add Device
-            </Button>
+            <p className="text-zinc-200 Inter text-xl xl:text-2xl">All Phones</p>
           </div>
 
           {error ? (
@@ -125,6 +117,7 @@ const Page = () => {
               pageIndex={pageIndex}
               totalPages={Math.ceil(totalDevices / devicesPerPage)}
               onPageChange={handlePageChange}
+              showAddDevice={true}
             />
           )}
         </div>
@@ -134,19 +127,25 @@ const Page = () => {
         <Modal onClose={toggleModal} title="Add New Device">
           <h3 className="mb-4 text-zinc-200 text-lg font-medium">Device Key</h3>
 
-          <div className="flex items-center space-x-2 bg-zinc-800 rounded-lg  text-sm border-[1px] border-[#FFFFFF0F]">
-            <div className="w-full bg-zinc-800 text-zinc-300 rounded-md px-6 py-4 text-sm">
+          <div className="flex items-center lg:space-x-2 bg-zinc-800 rounded-lg border-[1px] border-[#FFFFFF0F]">
+            <div className="w-full bg-zinc-800 text-zinc-300 rounded-md px-1 pl-2 py-3 lg:px-6 lg:py-4 text-xs lg:text-sm">
               {deviceKey}
             </div>
 
             <div
               onClick={handleCopy}
-              className="flex items-center justify-center w-44 text-zinc-300 min-h-full border-l-[1px] py-4 px-6 border-[#323238] cursor-pointer"
+              className="flex items-center justify-center w-20 md:w-44 text-zinc-300 min-h-full border-l-[1px] px-1 py-3 lg:py-4 lg:px-6 border-[#323238] cursor-pointer"
             >
               {copied ? (
                 <>
-                  <CopyCheck className="mr-2 hover:text-zinc-200" size={22} />
-                  <span className="text-xs text-zinc-300"> Copied!</span>
+                  <CopyCheck
+                    className="lg:mr-2 hover:text-zinc-200"
+                    size={22}
+                  />
+                  <span className="text-xs hidden md:block text-zinc-300">
+                    {" "}
+                    Copied!
+                  </span>
                 </>
               ) : (
                 <>
@@ -155,9 +154,11 @@ const Page = () => {
                     alt="Copy key"
                     width={22}
                     height={22}
-                    className="mr-2"
+                    className="lg:mr-2"
                   />
-                  <span className="text-xs text-zinc-300 ">Copy Key</span>
+                  <span className="text-xs text-zinc-300 hidden md:block">
+                    Copy Key
+                  </span>
                 </>
               )}
             </div>
@@ -168,9 +169,11 @@ const Page = () => {
               HOW TO ADD A DEVICE
             </h3>
             <ul className="bg-[#FFFFFF0F] rounded-lg list-disc list-inside p-6 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
-              <li>Copy the device key above</li>
-              <li>Paste the key in the __ app</li>
-              <li>Follow the remaining instructions in the app</li>
+              <li className="text-left">Copy the device key above</li>
+              <li className="text-left">Paste the key in the __ app</li>
+              <li className="text-left">
+                Follow the remaining instructions in the app
+              </li>
             </ul>
           </div>
         </Modal>

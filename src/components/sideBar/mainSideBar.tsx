@@ -54,16 +54,6 @@ export default function SidebarWithState({
 
   return (
     <div className="flex h-screen relative">
-      {!isSidebarOpen && isTablet && (
-        <div
-          onClick={toggleSidebar}
-          aria-label="Open sidebar"
-          className="absolute top-10 right-4 md:right-6  z-50 rounded-md flex  items-center cursor-pointer justify-center transition-transform hover:bg-opacity-90 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-primary focus:ring-secondary"
-        >
-          <AlignJustify size={24} className=" text-white" />
-        </div>
-      )}
-
       {isTablet && (
         <div
           className={`absolute z-50 top-0 h-screen transition-all duration-300 ${
@@ -112,6 +102,15 @@ export default function SidebarWithState({
           isSidebarOpen ? setIsSidebarOpen(false) : null;
         }}
       >
+        {!isSidebarOpen && isTablet && (
+          <div
+            onClick={toggleSidebar}
+            aria-label="Open sidebar"
+            className="absolute top-10 right-4 md:right-6 z-50 rounded-md flex  items-center cursor-pointer justify-center transition-transform hover:bg-opacity-90 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-primary focus:ring-secondary"
+          >
+            <AlignJustify size={24} className=" text-white" />
+          </div>
+        )}
         <div className="min-h-full w-full relative">{children}</div>
       </main>
     </div>

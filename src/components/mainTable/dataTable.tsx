@@ -32,6 +32,8 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  CopyCheck,
+  Plus,
   RotateCcw,
 } from "lucide-react";
 import CustomRadioButton from "./cutomRadioButton";
@@ -43,18 +45,23 @@ import { getColumns, TableData } from "./columns";
 import DeviceCard from "../DeviceCard/DeviceCard";
 import DeviceCardsContainer from "../DeviceCard/DeviceCardsContainer";
 import { useIsTablet } from "@/hooks/use-tablet";
+import Image from "next/image";
+import Modal from "../ModalComponent/ModalComponent";
+import AddDeviceModal from "../AddDeviceModal/AddDeviceModal";
 
 interface DataTableProps {
   data: TableData[];
   pageIndex: number;
   totalPages: number;
   onPageChange: (newPageIndex: number) => void;
+  showAddDevice?: boolean;
+
 }
 
 export function DataTable<
   TData extends { status: string; locations: string[] },
   TValue
->({ data, pageIndex, totalPages, onPageChange }: DataTableProps) {
+>({ data, pageIndex, totalPages, onPageChange, showAddDevice }: DataTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -71,9 +78,10 @@ export function DataTable<
     []
   );
   const [showTable, setShowTable] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeviceSettingsModal, setShowDeviceSettingsModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState<TableData | null>(null);
-
+  const [showAddDeviceModal, setShowAddDeviceModal] = useState<boolean>(false);
+  const [deviceKey] = useState<string>("kjsfhdsjehfgieuorjoi10924380130");
   const isTablet = useIsTablet();
 
   React.useEffect(() => {
@@ -82,10 +90,15 @@ export function DataTable<
     }
   }, [isTablet]);
 
-  const toggleModal = (row?: TableData) => {
+  const toggleDeviceSettingsModal = (row?: TableData) => {
     setSelectedRow(row || null);
-    setShowModal((prev) => !prev);
+    setShowDeviceSettingsModal((prev) => !prev);
   };
+
+  const toggleAddDeviceModal = () => {
+    setShowAddDeviceModal((prev) => !prev);
+  };
+  
   const allLocations = React.useMemo(() => {
     const locations = data.flatMap((item) => item.locations);
     return ["All", ...Array.from(new Set(locations))];
@@ -108,7 +121,7 @@ export function DataTable<
     return filtered;
   }, [filterStatus, selectedLocations, data]);
 
-  const columns = getColumns(toggleModal);
+  const columns = getColumns(toggleDeviceSettingsModal);
 
   const table = useReactTable({
     data: filteredData,
@@ -180,13 +193,14 @@ export function DataTable<
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 items-center py-5 justify-between">
-        <div className="xl:w-96">
+      <div className="flex flex-col xl:flex-row flex-wrap gap-4 py-5  justify-between">
+        <div className="flex flex-wrap gap-3 items-center flex-1">
           <InputField
             id="search"
             placeholder="Search Phones"
             icon={true}
-            size={isTablet ? "small" : "large"}
+            backgroundColor="dark"
+            size={"small"}
             value={
               (table.getColumn("phoneID")?.getFilterValue() as string) ?? ""
             }
@@ -194,13 +208,11 @@ export function DataTable<
               table.getColumn("phoneID")?.setFilterValue(event.target.value)
             }
           />
-        </div>
-        <div className="gap-3 flex flex-wrap">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className=" bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
+                className=" bg-zinc-900 border Inter  border-zinc-800 text-zinc-300 rounded-lg"
                 size="sm"
               >
                 Locations:{" "}
@@ -261,7 +273,7 @@ export function DataTable<
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className=" bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
+                className=" bg-zinc-900 border Inter  border-zinc-800 text-zinc-300  rounded-lg" 
                 size={"sm"}
               >
                 Status: {filterStatus} <ChevronDown />
@@ -278,20 +290,34 @@ export function DataTable<
               />
             </DropdownMenuContent>
           </DropdownMenu>
+        </div>
+        <div className="flex flex-wrap gap-4 flex-none">
+          
           <Button
             variant="outline"
-            className="bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
+            className="bg-zinc-900 border Inter font-medium border-zinc-800 text-xs text-zinc-300 rounded-lg"
             size="sm"
           >
             <RotateCcw /> Refresh
           </Button>
+          {showAddDevice && (
+            <Button
+            variant="outline"
+            className="bg-zinc-900 border Inter font-medium border-zinc-800 text-xs text-zinc-300 rounded-lg"
+            size="sm"
+            onClick={toggleAddDeviceModal}
+          >
+            <Plus /> Add Device
+          </Button>
+          )}
+          
           <Button
             variant="outline"
-            className={`border border-none ${
+            className={`border border-none text-xs ${
               Object.keys(rowSelection).length > 0
-                ? "bg-[#3F621280] text-lime-400 Inter font-medium"
-                : "bg-blue-700 border border-neutral-800 text-zinc-300 Inter font-medium"
-            } hover:text-zinc-900 hover:bg-white`}
+                ? "bg-[#3F621280] text-lime-400 Inter "
+                : "bg-blue-600 border border-blue-500 text-zinc-300 Inter "
+            } hover:text-zinc-900 hover:bg-white rounded-lg`}
             size="sm"
           >
             <div dangerouslySetInnerHTML={{ __html: Assets.BulkRotate }} />
@@ -433,11 +459,14 @@ export function DataTable<
         </div>
       )}
 
-      {showModal && selectedRow && (
+      {showDeviceSettingsModal && selectedRow && (
         <DeviceSettingsModal
-          onClose={() => toggleModal?.()}
+          onClose={() => toggleDeviceSettingsModal?.()}
           proxyData={proxyData}
         />
+      )}
+      {showAddDeviceModal && (
+        <AddDeviceModal onClose={toggleAddDeviceModal} deviceKey={deviceKey} />
       )}
     </div>
   );

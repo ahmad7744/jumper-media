@@ -61,7 +61,7 @@ const DeviceSettingsModal: React.FC<DeviceSettingsModalProps> = ({
               onAddProxy={() => setView("add")}
             />
           ) : (
-            <div className="text-zinc-300 text-lg text-center py-10">
+            <div className="text-zinc-300 text-lg text-center pb-10">
               <ChangeIp />
             </div>
           )}

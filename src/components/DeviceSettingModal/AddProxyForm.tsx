@@ -12,14 +12,14 @@ export const AddProxyForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   ];
   return (
     <div>
-      <p className="text-zinc-400 text-sm mb-4">
+      <p className="text-zinc-400 text-sm mb-6">
         Specify connection type and authorization parameters.
       </p>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid md:grid-cols-2  gap-4 mb-8">
         <div>
           <label className="text-zinc-300 text-sm block mb-2">Connect</label>
-          <div className="bg-zinc-800rounded-md text-white">
+          <div className="rounded-md text-white">
             <Select
               options={options}
               value={selectedOption}
@@ -32,7 +32,7 @@ export const AddProxyForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           <label className="text-zinc-300 text-sm block mb-2">
             Authorization
           </label>
-          <div className=" bg-zinc-800 rounded-md text-white ">
+          <div className="  rounded-md text-white ">
             <Select
               options={options}
               value={selectedOption}
