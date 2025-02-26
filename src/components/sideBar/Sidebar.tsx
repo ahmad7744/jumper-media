@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link"; 
+import Link from "next/link";
 import Assets from "../../../public/assets/assets";
 
 const Sidebar = ({
@@ -7,23 +7,24 @@ const Sidebar = ({
   onItemClick,
   selectedItem,
 }: {
-  items: { label: string; icon: string; path: string }[]; 
+  items: { label: string; icon: string; path: string }[];
   onItemClick: (label: string) => void;
   selectedItem: string;
 }) => {
   return (
-    <div className="w-[268px] bg-neutral-950 py-6 px-5 text-zinc-200 flex flex-col">
+    <div className=" bg-neutral-950 py-6 px-5 text-zinc-200 flex flex-col">
       <div dangerouslySetInnerHTML={{ __html: Assets.MainLogo }} />
       <div className="flex-1 mt-10">
         <ul className="space-y-2">
           {items.map((item, index) => (
             <li key={index}>
-              <Link href={item.path}> 
+              <Link href={item.path}>
                 <button
-                  className={`w-full flex items-center space-x-4 rounded-[8px] px-2 py-2 transition ${selectedItem === item.label
-                    ? "bg-zinc-800 text-zinc-200"
-                    : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-200"
-                    }`}
+                  className={`w-full flex items-center space-x-4 rounded-md px-2 py-2 transition ${
+                    selectedItem === item.label
+                      ? "bg-zinc-800 text-zinc-200"
+                      : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-200"
+                  }`}
                   onClick={() => onItemClick(item.label)}
                 >
                   <div dangerouslySetInnerHTML={{ __html: item.icon }} />
@@ -44,7 +45,9 @@ const Sidebar = ({
               />
             </div>
             <div>
-              <p className="Inter text-zinc-200 font-bold text-base">Get Jumper App</p>
+              <p className="Inter text-zinc-200 font-bold text-base">
+                Get Jumper App
+              </p>
               <div className="flex items-center cursor-pointer">
                 <div className="text-[10px] leading-[14px] border-b inline-block">
                   Download Now
