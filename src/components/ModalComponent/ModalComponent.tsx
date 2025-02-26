@@ -48,7 +48,7 @@ const Modal: React.FC<ModalProps> = ({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="w-[calc(100vw-40px)] lg:w-[calc(100vw-20rem)] xl:w-[calc(100vw-40rem)] 2xl:w-[calc(100vw-60rem)] mx-auto"
+            className="w-[calc(100vw-40px)] lg:w-[calc(100vw-20rem)] xl:w-[calc(100vw-40rem)] 2xl:w-[calc(100vw-70rem)] mx-auto"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -56,7 +56,7 @@ const Modal: React.FC<ModalProps> = ({
           >
             <div
               className=" bg-zinc-900 p-6 rounded-lg shadow-lg
-                            w-full max-h-[calc(100vh-80px)] overflow-y-auto sm:max-w-full sm:px-4"
+                            w-full max-h-[calc(100vh-80px)] overflow-y-auto sm:max-w-full sm:px-4 lg:px-8"
             >
               <div className="modal-header flex justify-between items-center">
                 <div className="flex items-center gap-2">

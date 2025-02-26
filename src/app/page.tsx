@@ -107,14 +107,6 @@ const Page = () => {
 
           <div className="flex justify-between items-center mt-10">
             <p className="text-zinc-200 Inter text-xl xl:text-2xl">All Phones</p>
-            <Button
-              variant="outline"
-              className="border border-none bg-blue-700 border-neutral-800 text-zinc-300 Inter hover:text-zinc-900 hover:bg-white"
-              size="sm"
-              onClick={toggleModal}
-            >
-              <Plus /> <span className="">Add Device</span>
-            </Button>
           </div>
 
           {error ? (
@@ -125,6 +117,7 @@ const Page = () => {
               pageIndex={pageIndex}
               totalPages={Math.ceil(totalDevices / devicesPerPage)}
               onPageChange={handlePageChange}
+              showAddDevice={true}
             />
           )}
         </div>
