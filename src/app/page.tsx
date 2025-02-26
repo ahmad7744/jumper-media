@@ -81,27 +81,27 @@ const Page = () => {
           <h1 className="text-neutral-50 Inter font-bold text-3xl">
             Dashboard
           </h1>
-          <div className="flex flex-wrap justify-between gap-6 xl:gap-12 mt-4">
+          <div className="flex flex-col md:flex-row flex-wrap justify-between gap-6 xl:gap-8 mt-4">
             <MetricCard
               valuePercent="+20% from last month"
               title="TOTAL PHONES"
               value={totalDevices.toString()}
               icon={Assets.MobileIcon}
-              className="border lg:border-gray-700 flex-1"
+              className="max-w-96 border lg:border-gray-700 md:flex-1"
             />
             <MetricCard
               title="ACTIVE PHONES"
               value={activeDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OnlineIcon}
-              className="border lg:border-gray-700 flex-1"
+              className="max-w-96 border lg:border-gray-700 flex-1"
             />
             <MetricCard
               title="OFFLINE PHONES"
               value={inactiveDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OfflineIcon}
-              className="border lg:border-gray-700 flex-1"
+              className="max-w-96 border lg:border-gray-700 flex-1"
             />
           </div>
 
@@ -145,7 +145,7 @@ const Page = () => {
             >
               {copied ? (
                 <>
-                  <CopyCheck className="mr-2 hover:text-zinc-200" size={20} />
+                  <CopyCheck className="mr-2 hover:text-zinc-200" size={22} />
                   <span className="text-xs text-zinc-300"> Copied!</span>
                 </>
               ) : (
@@ -164,8 +164,8 @@ const Page = () => {
           </div>
 
           <div className="text-gray-300 mt-8">
-            <h3 className="mb-4 text-zinc-200 text-md font-medium">
-              How to Add a Device
+            <h3 className="mb-4 text-zinc-200 text-sm font-medium">
+              HOW TO ADD A DEVICE
             </h3>
             <ul className="bg-[#FFFFFF0F] rounded-lg list-disc list-inside p-6 text-zinc-300 text-sm space-y-3 border-[1px] border-[#FFFFFF0F]">
               <li>Copy the device key above</li>

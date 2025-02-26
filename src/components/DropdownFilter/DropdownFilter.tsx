@@ -56,7 +56,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="outline"
-                    className="ml-auto bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
+                    className=" bg-transparent border Inter font-medium border-neutral-800 text-neutral-50"
                     size="sm"
                 >
                     {title}: {displayText || "Name"} <ChevronDown />

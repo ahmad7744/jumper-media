@@ -17,7 +17,7 @@ interface DeviceCardProps {
 
 const DeviceCard: React.FC<DeviceCardProps> = ({ device, isSelected, toggleSelection }) => {
   return (
-    <div className="bg-[#0A0A0A] border border-neutral-800 rounded-md p-4 w-[336px] flex flex-col gap-2 relative">
+    <div className="bg-[#0A0A0A] border border-neutral-800 rounded-md p-4 w-72 flex flex-col gap-2 relative">
       <div className="border-b border-neutral-800 pb-3">
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-semibold text-neutral-100">{device.phoneID}</h2>
