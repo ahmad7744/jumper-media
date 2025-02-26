@@ -81,27 +81,27 @@ const Page = () => {
           <h1 className="text-neutral-50 Inter font-bold text-3xl">
             Dashboard
           </h1>
-          <div className="flex flex-wrap justify-between gap-6 xl:gap-12 mt-4">
+          <div className="flex flex-col md:flex-row flex-wrap justify-between gap-6 xl:gap-8 mt-4">
             <MetricCard
               valuePercent="+20% from last month"
               title="TOTAL PHONES"
               value={totalDevices.toString()}
               icon={Assets.MobileIcon}
-              className="border lg:border-gray-700 flex-1"
+              className="max-w-96 border lg:border-gray-700 md:flex-1"
             />
             <MetricCard
               title="ACTIVE PHONES"
               value={activeDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OnlineIcon}
-              className="border lg:border-gray-700 flex-1"
+              className="max-w-96 border lg:border-gray-700 flex-1"
             />
             <MetricCard
               title="OFFLINE PHONES"
               value={inactiveDevices.toString()}
               valuePercent="+20% from last month"
               icon={Assets.OfflineIcon}
-              className="border lg:border-gray-700 flex-1"
+              className="max-w-96 border lg:border-gray-700 flex-1"
             />
           </div>
 

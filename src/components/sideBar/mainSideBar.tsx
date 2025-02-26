@@ -67,7 +67,7 @@ export default function SidebarWithState({
       {isTablet && (
         <div
           className={`absolute z-50 top-0 h-screen transition-all duration-300 ${
-            isSidebarOpen ? "w-64 lg:w-72 py-6 px-5" : "w-0 bg-zinc-900"
+            isSidebarOpen ? "w-60 lg:w-72 " : "w-0 bg-zinc-900"
           } bg-neutral-950 text-zinc-200 flex flex-col`}
         >
           <div
@@ -79,7 +79,7 @@ export default function SidebarWithState({
           </div>
 
           <div
-            className={`sticky top-0 h-screen ${
+            className={`sticky top-0 h-screen overflow-hidden ${
               isSidebarOpen ? "block" : "hidden"
             }`}
           >
@@ -94,7 +94,7 @@ export default function SidebarWithState({
 
       {!isTablet && (
         <div
-          className={` sticky top-0 h-screen w-72 bg-neutral-950 py-6 px-5 text-zinc-200 flex flex-col`}
+          className={` sticky top-0 h-screen w-72 bg-neutral-950  text-zinc-200 flex flex-col`}
         >
           <Sidebar
             items={sidebarItems}
@@ -108,7 +108,9 @@ export default function SidebarWithState({
         className={`flex-1 overflow-y-auto max-w-full relative ${
           !isSidebarOpen ? "w-full" : "blur-sm flex-shrink-0 lg:blur-none"
         }`}
-        onClick={()=>{isSidebarOpen ?  setIsSidebarOpen(false) : null}}
+        onClick={() => {
+          isSidebarOpen ? setIsSidebarOpen(false) : null;
+        }}
       >
         <div className="min-h-full w-full relative">{children}</div>
       </main>

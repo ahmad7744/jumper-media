@@ -181,7 +181,7 @@ export function DataTable<
   return (
     <div>
       <div className="flex flex-wrap gap-2 items-center py-5 justify-between">
-        <div className="lg:w-96">
+        <div className="xl:w-96">
           <InputField
             id="search"
             placeholder="Search Phones"

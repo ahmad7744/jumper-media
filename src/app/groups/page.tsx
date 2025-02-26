@@ -163,7 +163,7 @@ const GroupPage = () => {
     <div className="w-full py-10 px-4 lg:px-6 xl:px-8 2xl:px-10 h-screen mx-auto">
       <div className="w-full mx-auto">
         <h1 className="text-neutral-50 Inter font-bold text-3xl">Groups</h1>
-        <div className="flex items-center py-5 justify-between    ">
+        <div className="flex flex-col md:flex-row lg:items-center py-5 justify-between gap-2  ">
           <InputField
             id="search"
             placeholder="Search Groups"
@@ -172,7 +172,7 @@ const GroupPage = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <div className="gap-3 flex flex-wrap">
+          <div className="gap-3 flex flex-wrap ">
             <DropdownFilter
               title="Sort by"
               options={NameOptions}
